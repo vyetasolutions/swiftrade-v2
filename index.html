@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>swifTrade | The Zambian Business Network</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* ── PREMIUM DARK GLASSMORPHIC TOKENS ── */
+        :root {
+            --bg-base: #0a0a0c;
+            --glass-bg: rgba(20, 20, 25, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-glow: rgba(255, 255, 255, 0.03);
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --btn-primary: #3b82f6;
+            --btn-hover: #2563eb;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%);
+        }
+
+        /* ── STRUCTURAL UTILITIES ── */
+        .hidden { display: none !important; }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ── NAVIGATION ── */
+        nav {
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            background: rgba(10, 10, 12, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .brand { font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; cursor: pointer; }
+        .nav-links button {
+            background: transparent; border: none; color: var(--text-muted);
+            margin-left: 1.5rem; font-weight: 600; cursor: pointer; transition: var(--transition);
+        }
+        .nav-links button:hover { color: var(--text-main); }
+        .nav-links .btn-solid {
+            background: var(--btn-primary); color: #fff; padding: 0.5rem 1.2rem;
+            border-radius: 8px; box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        /* ── GLASS CONTAINERS ── */
+        .container {
+            width: 90%; max-width: 1200px; margin: 3rem auto; flex-grow: 1;
+        }
+        .glass-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 var(--glass-glow);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* ── TYPOGRAPHY & FORMS ── */
+        h1 { font-size: 2.5rem; margin-bottom: 1rem; letter-spacing: -1px; }
+        h2 { font-size: 1.8rem; margin-bottom: 1.5rem; font-weight: 600; }
+        p.subtitle { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.6; }
+
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.9rem; }
+        input, select, textarea {
+            width: 100%; padding: 0.8rem 1rem; border-radius: 8px;
+            background: rgba(0, 0, 0, 0.4); border: 1px solid var(--glass-border);
+            color: var(--text-main); font-size: 1rem; transition: var(--transition);
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none; border-color: var(--btn-primary); background: rgba(0, 0, 0, 0.6);
+        }
+        
+        button.action-btn {
+            width: 100%; padding: 1rem; border-radius: 8px; border: none;
+            background: var(--btn-primary); color: #fff; font-size: 1rem; font-weight: 600;
+            cursor: pointer; transition: var(--transition); box-shadow: 0 4px 15px var(--accent-glow);
+        }
+        button.action-btn:hover { background: var(--btn-hover); transform: translateY(-2px); }
+
+        /* ── DATA TABLES (ADMIN/BIZ DASHBOARDS) ── */
+        table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--glass-border); }
+        th { color: var(--text-muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        tr:hover { background: rgba(255, 255, 255, 0.02); }
+        .badge {
+            padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+        }
+        .badge.active { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge.pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    </style>
+</head>
+<body>
+
+    <!-- ── NAVIGATION BAR ── -->
+    <nav>
+        <div class="brand" onclick="app.navigate('home')">swifTrade</div>
+        <div class="nav-links" id="dynamic-nav">
+            <button onclick="app.navigate('supplier-onboard')">Register Business</button>
+            <button onclick="app.navigate('auth-gateway')">Workspace Login</button>
+            <button class="btn-solid" onclick="app.navigate('buyer-request')">Get Quotes Now</button>
+        </div>
+    </nav>
+
+    <!-- ── MAIN APPLICATION VIEWPORT ── -->
+    <div class="container" id="app-viewport">
+
+        <!-- 1. PUBLIC INGRESS (HOME) -->
+        <div id="view-home" class="view-section fade-in">
+            <div class="glass-panel" style="text-align: center; padding: 4rem 2rem;">
+                <h1>Stop chasing suppliers. Let them come to you.</h1>
+                <p class="subtitle">Tell us what your business needs. We match you with vetted Zambian suppliers instantly.</p>
+                <button class="action-btn" style="width: auto; padding: 1rem 3rem;" onclick="app.navigate('buyer-request')">Post a Request</button>
+            </div>
+        </div>
+
+        <!-- 2. BUYER REQUEST PIPELINE -->
+        <div id="view-buyer-request" class="view-section hidden fade-in">
+            <div class="glass-panel" style="max-width: 600px; margin: 0 auto;">
+                <h2>What do you need?</h2>
+                <p class="subtitle">Provide the details, and we'll notify suppliers who can deliver.</p>
+                <form id="form-buyer" onsubmit="app.submitBuyerRequest(event)">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="req-category" required>
+                            <option value="">Select industry...</option>
+                            <option value="construction">Construction & Materials</option>
+                            <option value="professional">Professional Services</option>
+                            <option value="logistics">Transport & Logistics</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Exact Requirements</label>
+                        <textarea id="req-details" rows="4" placeholder="e.g., We need 500 bags of cement delivered to Lusaka by Friday..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Your Contact Info (For winning suppliers only)</label>
+                        <input type="email" id="req-email" placeholder="Email address" required>
+                    </div>
+                    <button type="submit" class="action-btn">Broadcast to Suppliers</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 3. SUPPLIER ONBOARDING -->
+        <div id="view-supplier-onboard" class="view-section hidden fade-in">
+            <div class="glass-panel" style="max-width: 600px; margin: 0 auto;">
+                <h2>Join the Network</h2>
+                <p class="subtitle">Register your business to receive live requests directly from active buyers.</p>
+                <form id="form-supplier" onsubmit="app.submitSupplierReg(event)">
+                    <div class="form-group">
+                        <label>Business Name</label>
+                        <input type="text" id="biz-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Primary Service Sector</label>
+                        <select id="biz-sector" required>
+                            <option value="construction">Construction & Materials</option>
+                            <option value="professional">Professional Services</option>
+                            <option value="logistics">Transport & Logistics</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="action-btn">Establish Profile</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 4. SECURITY GATEWAY (LOGIN) -->
+        <div id="view-auth-gateway" class="view-section hidden fade-in">
+            <div class="glass-panel" style="max-width: 400px; margin: 0 auto; text-align: center;">
+                <h2>Workspace Access</h2>
+                <p class="subtitle">Enter your secure access pin to view your dashboard.</p>
+                <form onsubmit="app.authenticate(event)">
+                    <div class="form-group">
+                        <input type="password" id="auth-pin" placeholder="Enter PIN" required style="text-align: center; letter-spacing: 5px; font-size: 1.5rem;">
+                    </div>
+                    <button type="submit" class="action-btn">Unlock Workspace</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 5. BUSINESS WORKSPACE (LEADS) -->
+        <div id="view-biz-dashboard" class="view-section hidden fade-in">
+            <div class="glass-panel">
+                <h2>Live Opportunities</h2>
+                <p class="subtitle">Active requests matching your service sector.</p>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Requirement</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="biz-leads-table">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. ADMIN CONTROL PLANE -->
+        <div id="view-admin-dashboard" class="view-section hidden fade-in">
+            <div class="glass-panel">
+                <h2>System Command Center</h2>
+                <p class="subtitle">Global overview of network traffic and active nodes.</p>
+                <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                    <div class="glass-panel" style="flex: 1; padding: 1.5rem; text-align: center;">
+                        <h3 id="metric-requests" style="font-size: 2rem; color: var(--btn-primary);">0</h3>
+                        <p style="color: var(--text-muted); font-size: 0.85rem;">Active Requests</p>
+                    </div>
+                    <div class="glass-panel" style="flex: 1; padding: 1.5rem; text-align: center;">
+                        <h3 id="metric-suppliers" style="font-size: 2rem; color: var(--btn-primary);">0</h3>
+                        <p style="color: var(--text-muted); font-size: 0.85rem;">Verified Suppliers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── APPLICATION LOGIC & STATE ENGINE ── -->
+    <script>
+        const app = {
+            // Configuration
+            scriptURL: "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE",
+            currentSession: null,
+            
+            // State Router
+            navigate: function(viewId) {
+                // Hide all views
+                document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+                
+                // Remove fade-in to re-trigger animation
+                const targetView = document.getElementById(`view-${viewId}`);
+                targetView.classList.remove('fade-in');
+                void targetView.offsetWidth; // Trigger reflow
+                
+                // Show target view
+                targetView.classList.remove('hidden');
+                targetView.classList.add('fade-in');
+
+                // Adjust navigation UI based on state
+                this.updateNavUI(viewId);
+            },
+
+            updateNavUI: function(viewId) {
+                const nav = document.getElementById('dynamic-nav');
+                if (viewId.includes('dashboard')) {
+                    nav.innerHTML = `<button class="btn-solid" onclick="app.logout()">Secure Logout</button>`;
+                } else {
+                    nav.innerHTML = `
+                        <button onclick="app.navigate('supplier-onboard')">Register Business</button>
+                        <button onclick="app.navigate('auth-gateway')">Workspace Login</button>
+                        <button class="btn-solid" onclick="app.navigate('buyer-request')">Get Quotes Now</button>
+                    `;
+                }
+            },
+
+            // Network Operations
+            sendPayload: async function(payload) {
+                // EXPLICIT REQUIREMENT: Ensure automated email notifications are triggered on the backend
+                payload.triggerEmail = true; 
+
+                const btn = document.querySelector('.action-btn');
+                const originalText = btn ? btn.innerText : '';
+                if(btn) { btn.innerText = "Processing..."; btn.disabled = true; }
+
+                try {
+                    // In a live environment, uncomment the fetch block:
+                    /*
+                    const response = await fetch(this.scriptURL, {
+                        method: 'POST',
+                        mode: 'no-cors', // Adjust based on your GAS setup
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    */
+                    
+                    // Simulating network delay for smooth UI feedback
+                    await new Promise(r => setTimeout(r, 800)); 
+                    return { success: true }; 
+                } catch (error) {
+                    console.error("Transmission failed:", error);
+                    alert("Network error. Please try again.");
+                    return { success: false };
+                } finally {
+                    if(btn) { btn.innerText = originalText; btn.disabled = false; }
+                }
+            },
+
+            // Form Handlers
+            submitBuyerRequest: async function(e) {
+                e.preventDefault();
+                const payload = {
+                    action: "new_request",
+                    category: document.getElementById('req-category').value,
+                    details: document.getElementById('req-details').value,
+                    email: document.getElementById('req-email').value
+                };
+                
+                await this.sendPayload(payload);
+                alert("Your request is live. Suppliers are being notified.");
+                e.target.reset();
+                this.navigate('home');
+            },
+
+            submitSupplierReg: async function(e) {
+                e.preventDefault();
+                const payload = {
+                    action: "new_supplier",
+                    name: document.getElementById('biz-name').value,
+                    sector: document.getElementById('biz-sector').value
+                };
+                
+                await this.sendPayload(payload);
+                alert("Profile established. We will send you access credentials shortly.");
+                e.target.reset();
+                this.navigate('home');
+            },
+
+            // Security & Authorization
+            authenticate: async function(e) {
+                e.preventDefault();
+                const pin = document.getElementById('auth-pin').value;
+                
+                // Simulated Auth Handshake
+                // In production, send PIN to GAS and await role and session token
+                if (pin === "admin") {
+                    this.currentSession = { role: "admin" };
+                    this.loadAdminData();
+                    this.navigate('admin-dashboard');
+                } else if (pin === "biz") {
+                    this.currentSession = { role: "business" };
+                    this.loadBizData();
+                    this.navigate('biz-dashboard');
+                } else {
+                    alert("Invalid credentials.");
+                }
+                e.target.reset();
+            },
+
+            logout: function() {
+                this.currentSession = null;
+                this.navigate('home');
+            },
+
+            // Data Injection (Dynamic UI rendering)
+            loadBizData: function() {
+                // This data would come securely from your Google Apps Script return payload
+                const mockLeads = [
+                    { date: "Today", req: "500 Bags of Cement to Lusaka CBD", status: "Pending" },
+                    { date: "Yesterday", req: "Warehouse Roofing Materials", status: "Engaged" }
+                ];
+                
+                const tbody = document.getElementById('biz-leads-table');
+                tbody.innerHTML = mockLeads.map(lead => `
+                    <tr>
+                        <td style="color: var(--text-muted);">${lead.date}</td>
+                        <td style="font-weight: 600;">${lead.req}</td>
+                        <td><span class="badge ${lead.status.toLowerCase()}">${lead.status}</span></td>
+                        <td><button style="background:transparent; border:1px solid var(--btn-primary); color:var(--btn-primary); padding:0.4rem 1rem; border-radius:6px; cursor:pointer;">Engage</button></td>
+                    </tr>
+                `).join('');
+            },
+
+            loadAdminData: function() {
+                // Populate command center metrics
+                document.getElementById('metric-requests').innerText = "142";
+                document.getElementById('metric-suppliers').innerText = "38";
+            }
+        };
+
+        // Initialize application
+        window.onload = () => app.navigate('home');
+    </script>
+</body>
+</html>
