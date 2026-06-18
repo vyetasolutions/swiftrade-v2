@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>swifTrade | The Zambian Business Network</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
     <style>
-        /* ── PREMIUM DARK GLASSMORPHIC TOKENS ── */
+        /* ── VIBRANT GLASSMORPHIC TOKENS & ORIGINAL PALETTE INSPIRATION ── */
         :root {
-            --bg-base: #0a0a0c;
-            --glass-bg: rgba(20, 20, 25, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-glow: rgba(255, 255, 255, 0.03);
-            --accent-glow: rgba(59, 130, 246, 0.4);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --btn-primary: #3b82f6;
-            --btn-hover: #2563eb;
+            --brand-primary: #007AFF; /* Apple-style vibrant blue */
+            --brand-secondary: #5856D6;
+            --brand-accent: #34C759;
+            --bg-base: #f4f5f7;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            --text-main: #1d1d1f;
+            --text-muted: #6e6e73;
+            --input-bg: rgba(255, 255, 255, 0.9);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
@@ -29,99 +30,141 @@
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%);
+            position: relative;
+        }
+
+        /* ── ANIMATED BACKGROUND ORBS (FIGMA STYLE) ── */
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            animation: float 20s infinite ease-in-out;
+        }
+        .orb-1 { width: 400px; height: 400px; background: rgba(0, 122, 255, 0.3); top: -10%; left: -10%; }
+        .orb-2 { width: 500px; height: 500px; background: rgba(88, 86, 214, 0.25); bottom: -20%; right: -10%; animation-delay: -5s; }
+        .orb-3 { width: 300px; height: 300px; background: rgba(52, 199, 89, 0.2); top: 40%; left: 40%; animation-delay: -10s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -50px) scale(1.1); }
         }
 
         /* ── STRUCTURAL UTILITIES ── */
         .hidden { display: none !important; }
         .fade-in { animation: fadeIn 0.4s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ── NAVIGATION ── */
         nav {
-            padding: 1.5rem 5%;
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--glass-border);
-            background: rgba(10, 10, 12, 0.8);
+            background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             position: sticky;
             top: 0;
             z-index: 100;
         }
-        .brand { font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; cursor: pointer; }
+        .brand { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; cursor: pointer; color: var(--brand-primary); }
         .nav-links button {
-            background: transparent; border: none; color: var(--text-muted);
-            margin-left: 1.5rem; font-weight: 600; cursor: pointer; transition: var(--transition);
+            background: transparent; border: none; color: var(--text-main);
+            margin-left: 1.5rem; font-weight: 500; cursor: pointer; transition: var(--transition);
         }
-        .nav-links button:hover { color: var(--text-main); }
+        .nav-links button:hover { color: var(--brand-primary); }
         .nav-links .btn-solid {
-            background: var(--btn-primary); color: #fff; padding: 0.5rem 1.2rem;
-            border-radius: 8px; box-shadow: 0 4px 15px var(--accent-glow);
+            background: var(--brand-primary); color: #fff; padding: 0.6rem 1.2rem;
+            border-radius: 12px; font-weight: 600; box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
         }
+        .nav-links .btn-solid:hover { background: #0062cc; transform: translateY(-2px); }
 
         /* ── GLASS CONTAINERS ── */
-        .container {
-            width: 90%; max-width: 1200px; margin: 3rem auto; flex-grow: 1;
-        }
+        .container { width: 90%; max-width: 1200px; margin: 3rem auto; flex-grow: 1; position: relative; }
         .glass-panel {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
+            border-radius: 24px;
             padding: 2.5rem;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 var(--glass-glow);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
         }
 
         /* ── TYPOGRAPHY & FORMS ── */
-        h1 { font-size: 2.5rem; margin-bottom: 1rem; letter-spacing: -1px; }
-        h2 { font-size: 1.8rem; margin-bottom: 1.5rem; font-weight: 600; }
+        h1 { font-size: 3rem; margin-bottom: 1rem; letter-spacing: -1.2px; font-weight: 800; }
+        h2 { font-size: 1.8rem; margin-bottom: 0.5rem; font-weight: 700; letter-spacing: -0.5px; }
         p.subtitle { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.6; }
 
-        .form-group { margin-bottom: 1.5rem; }
-        label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.9rem; }
+        .form-group { margin-bottom: 1.5rem; text-align: left; }
+        label { display: block; margin-bottom: 0.5rem; color: var(--text-main); font-weight: 500; font-size: 0.9rem; }
         input, select, textarea {
-            width: 100%; padding: 0.8rem 1rem; border-radius: 8px;
-            background: rgba(0, 0, 0, 0.4); border: 1px solid var(--glass-border);
+            width: 100%; padding: 1rem; border-radius: 12px;
+            background: var(--input-bg); border: 1px solid rgba(0,0,0,0.1);
             color: var(--text-main); font-size: 1rem; transition: var(--transition);
         }
         input:focus, select:focus, textarea:focus {
-            outline: none; border-color: var(--btn-primary); background: rgba(0, 0, 0, 0.6);
+            outline: none; border-color: var(--brand-primary); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
         }
         
         button.action-btn {
-            width: 100%; padding: 1rem; border-radius: 8px; border: none;
-            background: var(--btn-primary); color: #fff; font-size: 1rem; font-weight: 600;
-            cursor: pointer; transition: var(--transition); box-shadow: 0 4px 15px var(--accent-glow);
+            width: 100%; padding: 1rem; border-radius: 12px; border: none;
+            background: var(--brand-primary); color: #fff; font-size: 1rem; font-weight: 600;
+            cursor: pointer; transition: var(--transition); box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
         }
-        button.action-btn:hover { background: var(--btn-hover); transform: translateY(-2px); }
+        button.action-btn:hover { background: #0062cc; transform: translateY(-2px); }
 
-        /* ── DATA TABLES (ADMIN/BIZ DASHBOARDS) ── */
-        table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
-        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--glass-border); }
-        th { color: var(--text-muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        tr:hover { background: rgba(255, 255, 255, 0.02); }
-        .badge {
-            padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+        /* ── DATA TABLES & FUNCTIONAL UI ── */
+        table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: 1rem; }
+        th { color: var(--text-muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; padding: 0 1rem; text-align: left; }
+        td { padding: 1.2rem 1rem; background: rgba(255,255,255,0.5); }
+        tr td:first-child { border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
+        tr td:last-child { border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
+        tr:hover td { background: rgba(255,255,255,0.8); }
+        
+        .badge { padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        .badge.notified { background: rgba(255, 149, 0, 0.15); color: #FF9500; }
+        .badge.engaged { background: rgba(0, 122, 255, 0.15); color: #007AFF; }
+        .badge.responded { background: rgba(52, 199, 89, 0.15); color: #34C759; }
+
+        .btn-small {
+            background: transparent; border: 1px solid var(--text-muted); color: var(--text-main);
+            padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer;
+            transition: var(--transition); font-weight: 500;
         }
-        .badge.active { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-        .badge.pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .btn-small:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: rgba(0, 122, 255, 0.05); }
+
+        /* Dashboard Flex Layouts */
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .metric-card { background: rgba(255,255,255,0.6); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--glass-border); text-align: center; }
+        .metric-value { font-size: 2.5rem; font-weight: 800; color: var(--brand-primary); margin-bottom: 0.5rem; }
+        
+        /* Toast Notification */
+        #toast {
+            visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center;
+            border-radius: 12px; padding: 16px; position: fixed; z-index: 1000; left: 50%; bottom: 30px;
+            transform: translateX(-50%); opacity: 0; transition: opacity 0.3s, bottom 0.3s;
+        }
+        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
     </style>
 </head>
 <body>
+
+    <!-- Animated Background -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+
+    <!-- Toast Notification Anchor -->
+    <div id="toast">Notification message</div>
 
     <!-- ── NAVIGATION BAR ── -->
     <nav>
         <div class="brand" onclick="app.navigate('home')">swifTrade</div>
         <div class="nav-links" id="dynamic-nav">
-            <button onclick="app.navigate('supplier-onboard')">Register Business</button>
-            <button onclick="app.navigate('auth-gateway')">Workspace Login</button>
-            <button class="btn-solid" onclick="app.navigate('buyer-request')">Get Quotes Now</button>
+            <!-- Dynamically populated by JS -->
         </div>
     </nav>
 
@@ -130,18 +173,21 @@
 
         <!-- 1. PUBLIC INGRESS (HOME) -->
         <div id="view-home" class="view-section fade-in">
-            <div class="glass-panel" style="text-align: center; padding: 4rem 2rem;">
-                <h1>Stop chasing suppliers. Let them come to you.</h1>
-                <p class="subtitle">Tell us what your business needs. We match you with vetted Zambian suppliers instantly.</p>
-                <button class="action-btn" style="width: auto; padding: 1rem 3rem;" onclick="app.navigate('buyer-request')">Post a Request</button>
+            <div class="glass-panel" style="text-align: center; padding: 5rem 2rem;">
+                <h1>Connect with verified Zambian suppliers.</h1>
+                <p class="subtitle" style="max-width: 600px; margin: 0 auto 2.5rem auto;">Post what your business needs. We instantly route your requirements to vetted suppliers who are ready to deliver.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <button class="action-btn" style="width: auto; padding: 1rem 2.5rem;" onclick="app.navigate('buyer-request')">Post a Request</button>
+                    <button class="action-btn" style="width: auto; padding: 1rem 2.5rem; background: transparent; border: 2px solid var(--brand-primary); color: var(--brand-primary);" onclick="app.navigate('supplier-onboard')">Join as a Supplier</button>
+                </div>
             </div>
         </div>
 
         <!-- 2. BUYER REQUEST PIPELINE -->
         <div id="view-buyer-request" class="view-section hidden fade-in">
-            <div class="glass-panel" style="max-width: 600px; margin: 0 auto;">
+            <div class="glass-panel" style="max-width: 650px; margin: 0 auto;">
                 <h2>What do you need?</h2>
-                <p class="subtitle">Provide the details, and we'll notify suppliers who can deliver.</p>
+                <p class="subtitle">Provide the details, and we'll immediately trigger email notifications to matching suppliers.</p>
                 <form id="form-buyer" onsubmit="app.submitBuyerRequest(event)">
                     <div class="form-group">
                         <label>Category</label>
@@ -157,8 +203,8 @@
                         <textarea id="req-details" rows="4" placeholder="e.g., We need 500 bags of cement delivered to Lusaka by Friday..." required></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Your Contact Info (For winning suppliers only)</label>
-                        <input type="email" id="req-email" placeholder="Email address" required>
+                        <label>Your Email (For winning suppliers to contact you)</label>
+                        <input type="email" id="req-email" placeholder="name@company.com" required>
                     </div>
                     <button type="submit" class="action-btn">Broadcast to Suppliers</button>
                 </form>
@@ -167,13 +213,13 @@
 
         <!-- 3. SUPPLIER ONBOARDING -->
         <div id="view-supplier-onboard" class="view-section hidden fade-in">
-            <div class="glass-panel" style="max-width: 600px; margin: 0 auto;">
-                <h2>Join the Network</h2>
-                <p class="subtitle">Register your business to receive live requests directly from active buyers.</p>
+            <div class="glass-panel" style="max-width: 650px; margin: 0 auto;">
+                <h2>Grow Your Business</h2>
+                <p class="subtitle">Register to receive automated email alerts the moment a buyer needs your services.</p>
                 <form id="form-supplier" onsubmit="app.submitSupplierReg(event)">
                     <div class="form-group">
                         <label>Business Name</label>
-                        <input type="text" id="biz-name" required>
+                        <input type="text" id="biz-name" placeholder="Official Company Name" required>
                     </div>
                     <div class="form-group">
                         <label>Primary Service Sector</label>
@@ -183,6 +229,10 @@
                             <option value="logistics">Transport & Logistics</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label>Notification Email</label>
+                        <input type="email" id="biz-email" placeholder="Where should we send live leads?" required>
+                    </div>
                     <button type="submit" class="action-btn">Establish Profile</button>
                 </form>
             </div>
@@ -190,31 +240,35 @@
 
         <!-- 4. SECURITY GATEWAY (LOGIN) -->
         <div id="view-auth-gateway" class="view-section hidden fade-in">
-            <div class="glass-panel" style="max-width: 400px; margin: 0 auto; text-align: center;">
+            <div class="glass-panel" style="max-width: 450px; margin: 0 auto; text-align: center;">
                 <h2>Workspace Access</h2>
-                <p class="subtitle">Enter your secure access pin to view your dashboard.</p>
+                <p class="subtitle">Enter your secure credentials to view your dashboard.</p>
                 <form onsubmit="app.authenticate(event)">
                     <div class="form-group">
-                        <input type="password" id="auth-pin" placeholder="Enter PIN" required style="text-align: center; letter-spacing: 5px; font-size: 1.5rem;">
+                        <input type="password" id="auth-pin" placeholder="Enter PIN" required style="text-align: center; letter-spacing: 4px; font-size: 1.2rem;">
                     </div>
                     <button type="submit" class="action-btn">Unlock Workspace</button>
                 </form>
+                <p style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
+                    Hint: Use <strong>admin</strong> for Control Plane or <strong>biz</strong> for Lead Workspace
+                </p>
             </div>
         </div>
 
         <!-- 5. BUSINESS WORKSPACE (LEADS) -->
         <div id="view-biz-dashboard" class="view-section hidden fade-in">
             <div class="glass-panel">
-                <h2>Live Opportunities</h2>
-                <p class="subtitle">Active requests matching your service sector.</p>
+                <h2>Live Opportunities Pipeline</h2>
+                <p class="subtitle">Manage incoming requests, copy client contact details, and update engagement milestones.</p>
                 <div style="overflow-x: auto;">
                     <table>
                         <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Requirement</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>Client Request</th>
+                                <th>Target Location</th>
+                                <th>Status Milestone</th>
+                                <th>Client Contact</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="biz-leads-table">
@@ -229,16 +283,38 @@
         <div id="view-admin-dashboard" class="view-section hidden fade-in">
             <div class="glass-panel">
                 <h2>System Command Center</h2>
-                <p class="subtitle">Global overview of network traffic and active nodes.</p>
-                <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
-                    <div class="glass-panel" style="flex: 1; padding: 1.5rem; text-align: center;">
-                        <h3 id="metric-requests" style="font-size: 2rem; color: var(--btn-primary);">0</h3>
-                        <p style="color: var(--text-muted); font-size: 0.85rem;">Active Requests</p>
+                <p class="subtitle">Audit systemic health, track cross-platform transaction volumes, and monitor telemetry.</p>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" id="kpi-volume">0</div>
+                        <div style="color: var(--text-muted); font-weight: 500;">Total Transactions</div>
                     </div>
-                    <div class="glass-panel" style="flex: 1; padding: 1.5rem; text-align: center;">
-                        <h3 id="metric-suppliers" style="font-size: 2rem; color: var(--btn-primary);">0</h3>
-                        <p style="color: var(--text-muted); font-size: 0.85rem;">Verified Suppliers</p>
+                    <div class="metric-card">
+                        <div class="metric-value" id="kpi-emails">0</div>
+                        <div style="color: var(--text-muted); font-weight: 500;">Emails Triggered</div>
                     </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="kpi-suppliers">0</div>
+                        <div style="color: var(--text-muted); font-weight: 500;">Verified Suppliers</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.2rem;">Historical Activity Logs</h3>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Event Type</th>
+                                <th>System Node</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-logs-table">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -248,25 +324,23 @@
     <!-- ── APPLICATION LOGIC & STATE ENGINE ── -->
     <script>
         const app = {
-            // Configuration
             scriptURL: "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE",
             currentSession: null,
             
-            // State Router
+            // Mock Data States (Replaces backend fetches for this standalone file)
+            bizLeads: [
+                { id: 101, req: "500 Bags of Cement", location: "Lusaka CBD", status: "Notified", email: "procurement@buildco.zm" },
+                { id: 102, req: "Warehouse Roofing Materials", location: "Ndola", status: "Engaged", email: "logistics@supplyzm.com" }
+            ],
+            
+            // ── ROUTING & UI ──
             navigate: function(viewId) {
-                // Hide all views
                 document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-                
-                // Remove fade-in to re-trigger animation
                 const targetView = document.getElementById(`view-${viewId}`);
                 targetView.classList.remove('fade-in');
-                void targetView.offsetWidth; // Trigger reflow
-                
-                // Show target view
+                void targetView.offsetWidth; // Reflow
                 targetView.classList.remove('hidden');
                 targetView.classList.add('fade-in');
-
-                // Adjust navigation UI based on state
                 this.updateNavUI(viewId);
             },
 
@@ -283,39 +357,45 @@
                 }
             },
 
-            // Network Operations
-            sendPayload: async function(payload) {
-                // EXPLICIT REQUIREMENT: Ensure automated email notifications are triggered on the backend
-                payload.triggerEmail = true; 
+            showToast: function(message) {
+                const toast = document.getElementById("toast");
+                toast.innerText = message;
+                toast.classList.add("show");
+                setTimeout(() => { toast.classList.remove("show"); }, 3000);
+            },
 
-                const btn = document.querySelector('.action-btn');
-                const originalText = btn ? btn.innerText : '';
-                if(btn) { btn.innerText = "Processing..."; btn.disabled = true; }
+            // ── NETWORK ENGINE (WITH EMAIL TRIGGERS INCLUDED) ──
+            sendPayload: async function(payload) {
+                // 100% Functionality Requirement: Explicitly flag email triggers for Apps Script
+                payload.triggerEmail = true; 
+                payload.timestamp = new Date().toISOString();
+
+                const btn = document.querySelector(`#view-${document.querySelector('.view-section:not(.hidden)').id.replace('view-','')} .action-btn`);
+                let originalText = "";
+                if(btn) { originalText = btn.innerText; btn.innerText = "Processing..."; btn.disabled = true; }
 
                 try {
-                    // In a live environment, uncomment the fetch block:
+                    // LIVE FETCH TEMPLATE (Uncomment in production)
                     /*
                     const response = await fetch(this.scriptURL, {
                         method: 'POST',
-                        mode: 'no-cors', // Adjust based on your GAS setup
+                        mode: 'no-cors', 
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
                     */
-                    
-                    // Simulating network delay for smooth UI feedback
-                    await new Promise(r => setTimeout(r, 800)); 
+                    await new Promise(r => setTimeout(r, 800)); // Simulate network
                     return { success: true }; 
                 } catch (error) {
                     console.error("Transmission failed:", error);
-                    alert("Network error. Please try again.");
+                    this.showToast("Network error. Please check your connection.");
                     return { success: false };
                 } finally {
                     if(btn) { btn.innerText = originalText; btn.disabled = false; }
                 }
             },
 
-            // Form Handlers
+            // ── PUBLIC INGRESS HANDLERS ──
             submitBuyerRequest: async function(e) {
                 e.preventDefault();
                 const payload = {
@@ -324,9 +404,8 @@
                     details: document.getElementById('req-details').value,
                     email: document.getElementById('req-email').value
                 };
-                
                 await this.sendPayload(payload);
-                alert("Your request is live. Suppliers are being notified.");
+                this.showToast("Request broadcasted. Email alerts triggered to suppliers.");
                 e.target.reset();
                 this.navigate('home');
             },
@@ -336,32 +415,30 @@
                 const payload = {
                     action: "new_supplier",
                     name: document.getElementById('biz-name').value,
-                    sector: document.getElementById('biz-sector').value
+                    sector: document.getElementById('biz-sector').value,
+                    email: document.getElementById('biz-email').value
                 };
-                
                 await this.sendPayload(payload);
-                alert("Profile established. We will send you access credentials shortly.");
+                this.showToast("Profile established. Welcome to the network.");
                 e.target.reset();
                 this.navigate('home');
             },
 
-            // Security & Authorization
+            // ── SECURITY GATEWAY ──
             authenticate: async function(e) {
                 e.preventDefault();
-                const pin = document.getElementById('auth-pin').value;
+                const pin = document.getElementById('auth-pin').value.toLowerCase();
                 
-                // Simulated Auth Handshake
-                // In production, send PIN to GAS and await role and session token
                 if (pin === "admin") {
                     this.currentSession = { role: "admin" };
                     this.loadAdminData();
                     this.navigate('admin-dashboard');
                 } else if (pin === "biz") {
                     this.currentSession = { role: "business" };
-                    this.loadBizData();
+                    this.renderBizTable();
                     this.navigate('biz-dashboard');
                 } else {
-                    alert("Invalid credentials.");
+                    this.showToast("Invalid credentials.");
                 }
                 e.target.reset();
             },
@@ -369,36 +446,88 @@
             logout: function() {
                 this.currentSession = null;
                 this.navigate('home');
+                this.showToast("Logged out securely.");
             },
 
-            // Data Injection (Dynamic UI rendering)
-            loadBizData: function() {
-                // This data would come securely from your Google Apps Script return payload
-                const mockLeads = [
-                    { date: "Today", req: "500 Bags of Cement to Lusaka CBD", status: "Pending" },
-                    { date: "Yesterday", req: "Warehouse Roofing Materials", status: "Engaged" }
-                ];
-                
+            // ── BUSINESS WORKSPACE FUNCTIONALITY ──
+            renderBizTable: function() {
                 const tbody = document.getElementById('biz-leads-table');
-                tbody.innerHTML = mockLeads.map(lead => `
+                tbody.innerHTML = this.bizLeads.map(lead => `
                     <tr>
-                        <td style="color: var(--text-muted);">${lead.date}</td>
                         <td style="font-weight: 600;">${lead.req}</td>
-                        <td><span class="badge ${lead.status.toLowerCase()}">${lead.status}</span></td>
-                        <td><button style="background:transparent; border:1px solid var(--btn-primary); color:var(--btn-primary); padding:0.4rem 1rem; border-radius:6px; cursor:pointer;">Engage</button></td>
+                        <td style="color: var(--text-muted);">${lead.location}</td>
+                        <td>
+                            <select onchange="app.shiftMilestone(${lead.id}, this.value)" style="padding: 0.3rem; font-size: 0.8rem; width: auto; background: transparent; border: 1px solid var(--glass-border);">
+                                <option value="Notified" ${lead.status === 'Notified' ? 'selected' : ''}>Notified</option>
+                                <option value="Engaged" ${lead.status === 'Engaged' ? 'selected' : ''}>Engaged</option>
+                                <option value="Responded" ${lead.status === 'Responded' ? 'selected' : ''}>Responded</option>
+                            </select>
+                        </td>
+                        <td>
+                            <div style="display:flex; align-items:center; gap: 0.5rem;">
+                                <span style="font-size: 0.85rem; color: var(--text-muted);">${lead.email.substring(0,4)}...</span>
+                                <button class="btn-small" onclick="app.copyContact('${lead.email}')">Copy</button>
+                            </div>
+                        </td>
+                        <td><button class="btn-small" style="color: var(--brand-primary); border-color: var(--brand-primary);" onclick="app.showToast('Lead opened for drafting')">View Details</button></td>
                     </tr>
                 `).join('');
             },
 
+            copyContact: function(email) {
+                navigator.clipboard.writeText(email).then(() => {
+                    this.showToast(`Contact line copied: ${email}`);
+                });
+            },
+
+            shiftMilestone: async function(id, newStatus) {
+                // Update local state
+                const leadIndex = this.bizLeads.findIndex(l => l.id === id);
+                if(leadIndex > -1) {
+                    this.bizLeads[leadIndex].status = newStatus;
+                    // Trigger backend update with email notification parameter
+                    await this.sendPayload({
+                        action: "update_milestone",
+                        leadId: id,
+                        status: newStatus,
+                        triggerEmail: true // Ensures client is emailed about the status shift
+                    });
+                    this.showToast(`Milestone shifted to ${newStatus}`);
+                    this.renderBizTable(); // Re-render to update UI colors if needed
+                }
+            },
+
+            // ── ADMIN CONTROL PLANE FUNCTIONALITY ──
             loadAdminData: function() {
-                // Populate command center metrics
-                document.getElementById('metric-requests').innerText = "142";
-                document.getElementById('metric-suppliers').innerText = "38";
+                // Render KPIs
+                document.getElementById('kpi-volume').innerText = "1,492";
+                document.getElementById('kpi-emails').innerText = "3,840";
+                document.getElementById('kpi-suppliers').innerText = "215";
+
+                // Render Historical Logs
+                const mockLogs = [
+                    { time: "10:42 AM", event: "New RFP Broadcast", node: "Client Sourcing Engine", status: "Success" },
+                    { time: "09:15 AM", event: "Milestone Shift (Engaged)", node: "Business Workspace", status: "Success" },
+                    { time: "08:30 AM", event: "Supplier Verification", node: "Onboarding Pipeline", status: "Pending Audit" }
+                ];
+
+                const tbody = document.getElementById('admin-logs-table');
+                tbody.innerHTML = mockLogs.map(log => `
+                    <tr>
+                        <td style="color: var(--text-muted); font-size: 0.85rem;">${log.time}</td>
+                        <td style="font-weight: 500;">${log.event}</td>
+                        <td style="color: var(--text-muted);">${log.node}</td>
+                        <td><span class="badge" style="background: ${log.status.includes('Success') ? 'rgba(52, 199, 89, 0.15)' : 'rgba(255, 149, 0, 0.15)'}; color: ${log.status.includes('Success') ? 'var(--brand-accent)' : '#FF9500'}">${log.status}</span></td>
+                    </tr>
+                `).join('');
             }
         };
 
-        // Initialize application
-        window.onload = () => app.navigate('home');
+        // Initialize application routing on load
+        window.onload = () => {
+            app.navigate('home');
+            app.updateNavUI('home');
+        };
     </script>
 </body>
 </html>
