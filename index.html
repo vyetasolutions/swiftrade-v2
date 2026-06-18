@@ -3,562 +3,354 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>swifTrade | B2B Procurement Network</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <title>swifTrade | The Demand-First Marketplace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ── STRIPE/APPLE-INSPIRED MINIMALIST DARK TEXTURE ── */
+        /* ── HIGH-END MINIMALIST DESIGN TOKENS (LINEAR / APPLE INFLUENCE) ── */
         :root {
-            --bg-main: #060608;
-            --panel-bg: rgba(18, 18, 24, 0.75);
-            --border-primary: rgba(255, 255, 255, 0.06);
-            --border-active: rgba(255, 255, 255, 0.15);
+            --bg-base: #000000;
+            --bg-surface: #0A0A0A;
+            --bg-elevated: #141414;
             
-            --accent-blue: #0A84FF;
-            --accent-purple: #635BFF;
-            --status-success: #30D5C8;
-            --status-warning: #FF9F0A;
+            --border-dim: #262626;
+            --border-focus: #404040;
             
-            --text-pure: #FFFFFF;
-            --text-body: #E5E5EA;
-            --text-dim: #8E8E93;
+            --brand-primary: #FFFFFF;
+            --brand-accent: #0071E3; /* Apple Blue */
             
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --easing: cubic-bezier(0.16, 1, 0.3, 1);
+            --text-main: #F5F5F7;
+            --text-muted: #A1A1A6;
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 24px;
+            
+            --transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-body);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
+        body { background-color: var(--bg-base); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
 
-        /* Subtle ambient glow to break up the dark background without being loud */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 25%; width: 50%; height: 400px;
-            background: radial-gradient(circle, rgba(99, 91, 255, 0.05) 0%, transparent 70%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* ── UTILITY CLASSES ── */
+        /* ── UTILITIES ── */
         .hidden { display: none !important; }
-        .fade-engine { animation: screenReveal 0.5s var(--easing) forwards; }
-        @keyframes screenReveal { from { opacity: 0; transform: scale(0.99) translateY(4px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ── NAVIGATION ARRAYS ── */
+        /* ── NAVIGATION ── */
         nav {
-            height: 72px;
-            padding: 0 4%;
+            padding: 1.2rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-primary);
-            background: rgba(6, 6, 8, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-dim);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             position: sticky;
             top: 0;
             z-index: 100;
         }
-        .logo-mark { font-weight: 900; font-size: 1.25rem; letter-spacing: -0.8px; color: var(--text-pure); cursor: pointer; display: flex; align-items: center; gap: 6px; }
-        .logo-dot { width: 6px; height: 6px; background: var(--accent-blue); border-radius: 50%; }
+        .brand { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.5px; cursor: pointer; color: var(--brand-primary); }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-link { background: none; border: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: var(--transition); }
+        .nav-link:hover { color: var(--brand-primary); }
+
+        /* ── LAYOUT ── */
+        .container { width: 90%; max-width: 1000px; margin: 4rem auto; flex-grow: 1; }
         
-        .nav-actions { display: flex; align-items: center; gap: 1.5rem; }
-        .nav-link { background: transparent; border: none; color: var(--text-dim); font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: color 0.2s ease; }
-        .nav-link:hover { color: var(--text-pure); }
+        /* Typography */
+        h1 { font-size: 3rem; font-weight: 700; letter-spacing: -1.5px; margin-bottom: 1rem; line-height: 1.1; }
+        h2 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 0.5rem; }
+        p.subtitle { color: var(--text-muted); font-size: 1.1rem; line-height: 1.5; margin-bottom: 2.5rem; max-width: 600px; }
+
+        /* ── FRICTIONLESS FORM CONTROLS ── */
+        .form-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-dim);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-group { margin-bottom: 1.5rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        .btn-premium {
-            background: var(--text-pure); color: var(--bg-main); padding: 0.6rem 1.1rem;
-            border-radius: 8px; font-weight: 600; font-size: 0.85rem; border: 1px solid transparent;
-            cursor: pointer; transition: var(--easing);
+        input[type="text"], input[type="number"], select {
+            width: 100%; background: var(--bg-elevated); border: 1px solid var(--border-dim);
+            color: var(--text-main); padding: 1rem; border-radius: var(--radius-md);
+            font-size: 1rem; transition: var(--transition);
         }
-        .btn-premium:hover { background: transparent; color: var(--text-pure); border-color: var(--border-active); }
+        input:focus, select:focus { outline: none; border-color: var(--border-focus); background: #1A1A1A; }
 
-        /* ── APPLICATION CANVAS ── */
-        .viewport { width: 92%; max-width: 1200px; margin: 4rem auto; flex-grow: 1; }
+        /* Interactive Pill Selectors (Reduces Typing) */
+        .pill-container { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+        .pill {
+            background: var(--bg-elevated); border: 1px solid var(--border-dim);
+            color: var(--text-muted); padding: 0.75rem 1.25rem; border-radius: 100px;
+            font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: var(--transition);
+            user-select: none;
+        }
+        .pill:hover { border-color: var(--border-focus); color: var(--text-main); }
+        .pill.active { background: var(--brand-primary); color: var(--bg-base); border-color: var(--brand-primary); font-weight: 600; }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--brand-accent); color: #fff; border: none;
+            padding: 1rem 2rem; border-radius: var(--radius-md); font-size: 1rem;
+            font-weight: 600; cursor: pointer; transition: var(--transition); width: 100%;
+        }
+        .btn-primary:hover { background: #005BB5; }
+
+        /* ── DATA TABLES (DASHBOARD) ── */
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .data-table th { text-align: left; padding: 1rem; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; border-bottom: 1px solid var(--border-dim); }
+        .data-table td { padding: 1.2rem 1rem; border-bottom: 1px solid var(--border-dim); font-size: 0.95rem; }
+        .data-table tr:hover td { background: var(--bg-surface); }
         
-        .card-panel {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-primary);
-            border-radius: 14px;
-            padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-        }
+        .tag { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; border: 1px solid var(--border-dim); background: var(--bg-elevated); }
+        .tag.urgent { color: #FF453A; border-color: rgba(255, 69, 58, 0.3); }
+        .tag.budget { color: #32D74B; }
 
-        /* ── TYPOGRAPHY ── */
-        h1 { font-size: 3.2rem; font-weight: 900; letter-spacing: -1.8px; color: var(--text-pure); line-height: 1.1; margin-bottom: 1rem; }
-        h2 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.6px; color: var(--text-pure); margin-bottom: 0.5rem; }
-        .hero-desc { color: var(--text-dim); font-size: 1.2rem; line-height: 1.5; font-weight: 400; max-width: 580px; margin-bottom: 2.5rem; }
-        .panel-desc { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 2rem; }
-
-        /* ── INDUSTRIAL GRADE FORM DESIGN ── */
-        .form-layout { display: flex; flex-direction: column; gap: 1.5rem; }
-        .field-group { display: flex; flex-direction: column; gap: 0.5rem; }
-        .field-label { font-size: 0.85rem; font-weight: 600; color: var(--text-pure); letter-spacing: -0.1px; }
-        
-        input, select, textarea {
-            width: 100%; padding: 0.85rem 1rem; border-radius: 8px;
-            background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-primary);
-            color: var(--text-pure); font-size: 0.95rem; transition: all 0.2s var(--easing);
-        }
-        input:focus, select:focus, textarea:focus {
-            outline: none; border-color: var(--border-active); background: rgba(0, 0, 0, 0.5);
-        }
-        select { appearance: none; cursor: pointer; }
-        textarea { resize: vertical; }
-
-        .btn-action {
-            background: var(--accent-purple); color: var(--text-pure); padding: 0.9rem;
-            border-radius: 8px; border: none; font-size: 0.95rem; font-weight: 600; cursor: pointer;
-            transition: all 0.2s ease; display: inline-flex; justify-content: center; align-items: center;
-        }
-        .btn-action:hover { background: #5149E6; transform: translateY(-1px); }
-        .btn-action:disabled { background: var(--border-primary); color: var(--text-dim); cursor: not-allowed; transform: none; }
-
-        /* ── STRIPE-STYLE DATA ARRAYS ── */
-        .table-scroller { width: 100%; overflow-x: auto; margin-top: 1.5rem; border-radius: 8px; border: 1px solid var(--border-primary); background: rgba(0,0,0,0.2); }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
-        th { padding: 1rem 1.25rem; color: var(--text-dim); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-primary); }
-        td { padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--border-primary); color: var(--text-body); vertical-align: middle; }
-        tr:last-child td { border-bottom: none; }
-        tr:hover td { background: rgba(255,255,255,0.01); }
-
-        /* Status Flags */
-        .milestone-tag {
-            display: inline-flex; align-items: center; gap: 6px; padding: 0.25rem 0.65rem; 
-            border-radius: 6px; font-size: 0.75rem; font-weight: 600; border: 1px solid transparent;
-        }
-        .milestone-tag.notified { background: rgba(255, 159, 10, 0.1); color: var(--status-warning); border-color: rgba(255, 159, 10, 0.15); }
-        .milestone-tag.engaged { background: rgba(10, 132, 255, 0.1); color: var(--accent-blue); border-color: rgba(10, 132, 255, 0.15); }
-        .milestone-tag.responded { background: rgba(48, 213, 200, 0.1); color: var(--status-success); border-color: rgba(48, 213, 200, 0.15); }
-
-        /* Core Interface Controls */
-        .control-btn {
-            background: rgba(255,255,255,0.04); border: 1px solid var(--border-primary); color: var(--text-pure);
-            padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;
-        }
-        .control-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--border-active); }
-        
-        .selector-inline {
-            background: rgba(0,0,0,0.4); border: 1px solid var(--border-primary); color: var(--text-pure);
-            padding: 0.35rem 0.5rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer;
-        }
-
-        /* ── METRIC TILES (ADMIN INTERFACE) ── */
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
-        .tile-card { background: rgba(0,0,0,0.2); border: 1px solid var(--border-primary); border-radius: 10px; padding: 1.5rem; }
-        .tile-label { font-size: 0.75rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
-        .tile-value { font-size: 2rem; font-weight: 700; color: var(--text-pure); letter-spacing: -0.5px; }
-
-        /* ── NOTIFICATION COMPONENT ── */
-        #hud-toast {
-            visibility: hidden; min-width: 280px; background: #121218; border: 1px solid var(--border-active);
-            color: var(--text-pure); font-size: 0.85rem; font-weight: 500; text-align: center; border-radius: 8px;
-            padding: 1rem; position: fixed; z-index: 1000; left: 50%; bottom: 40px; transform: translateX(-50%);
-            opacity: 0; box-shadow: 0 12px 30px rgba(0,0,0,0.5); transition: opacity 0.3s var(--easing), bottom 0.3s var(--easing);
-        }
-        #hud-toast.active { visibility: visible; opacity: 1; bottom: 50px; }
     </style>
 </head>
 <body>
 
-    <!-- Notification Engine -->
-    <div id="hud-toast">System Action Logged</div>
-
-    <!-- ── APPLICATION FRAMEWORK COVER ── -->
+    <!-- ── NAVIGATION ── -->
     <nav>
-        <div class="logo-mark" onclick="app.navigate('home')">swifTrade<div class="logo-dot"></div></div>
-        <div class="nav-actions" id="app-nav-slots">
-            <!-- Dynamic Injection -->
+        <div class="brand" onclick="app.navigate('home')">swifTrade</div>
+        <div class="nav-links" id="nav-dynamic">
+            <button class="nav-link" onclick="app.navigate('vendor-hub')">Supplier Workspace</button>
         </div>
     </nav>
 
-    <!-- ── DYNAMIC VIEWPORT LINK ── -->
-    <div class="viewport" id="master-viewport">
+    <div class="container" id="app-viewport">
 
-        <!-- SCREEN 1: THE CORE GATEWAY (HOME) -->
-        <div id="screen-home" class="view-node fade-engine">
-            <h1 style="max-width: 700px;">Stop wasting days chasing business quotes.</h1>
-            <p class="hero-desc">Post your procurement requirements directly to our network. Vetted Zambian suppliers compete for your contract, while you monitor responses from a single dashboard.</p>
-            <div style="display: flex; gap: 1rem;">
-                <button class="btn-premium" onclick="app.navigate('buyer-request')">Request Quotes</button>
-                <button class="control-btn" style="padding: 0.8rem 1.5rem;" onclick="app.navigate('vendor-onboard')">Register as Vendor</button>
+        <!-- 1. HOME / ENTRY PITCH -->
+        <div id="view-home" class="view-section fade-in">
+            <div style="text-align: center; max-width: 700px; margin: 0 auto 4rem auto;">
+                <h1>Skip the endless phone calls.</h1>
+                <p class="subtitle" style="margin: 0 auto 2.5rem auto;">Tell us exactly what your business needs, your budget, and when you need it. We instantly match you with verified suppliers who can actually deliver.</p>
+                <button class="btn-primary" style="width: auto; padding: 1rem 2.5rem;" onclick="app.navigate('request-builder')">Post a Requirement</button>
             </div>
         </div>
 
-        <!-- SCREEN 2: PROCUREMENT BROADCAST PIPELINE (BUYER) -->
-        <div id="screen-buyer-request" class="view-node hidden fade-engine">
-            <div class="card-panel" style="max-width: 600px; margin: 0 auto;">
-                <h2>Publish Requirements</h2>
-                <p class="panel-desc">Define your items clearly. Matching suppliers receive immediate, automated alerts.</p>
+        <!-- 2. FRICTIONLESS REQUEST BUILDER (DATA CAPTURE) -->
+        <div id="view-request-builder" class="view-section hidden fade-in">
+            <div style="max-width: 650px; margin: 0 auto;">
+                <h2>What do you need?</h2>
+                <p class="subtitle">Complete these parameters so suppliers can give you exact quotes.</p>
                 
-                <form id="form-procurement" class="form-layout" onsubmit="app.executeBuyerSubmit(event)">
-                    <div class="field-group">
-                        <label class="field-label">Procurement Category</label>
-                        <select id="field-cat" required>
-                            <option value="">Select industry classification...</option>
-                            <option value="Construction & Materials">Construction & Heavy Materials</option>
-                            <option value="Professional Services">Professional & Corporate Services</option>
-                            <option value="Transport & Logistics">Transport, Haulage & Logistics</option>
-                        </select>
+                <form id="form-request" onsubmit="app.submitRequest(event)">
+                    
+                    <!-- Core Item -->
+                    <div class="form-section">
+                        <div class="input-group">
+                            <label>Product or Service Required</label>
+                            <input type="text" id="req-item" placeholder="e.g., 42.5N Portland Cement, Legal Consultation, Haulage Truck" required>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <div class="input-group" style="flex: 1;">
+                                <label>Quantity</label>
+                                <input type="number" id="req-qty" placeholder="e.g., 500" required>
+                            </div>
+                            <div class="input-group" style="flex: 1;">
+                                <label>Unit</label>
+                                <select id="req-unit">
+                                    <option value="Pieces">Pieces</option>
+                                    <option value="Bags">Bags</option>
+                                    <option value="Tons">Tons</option>
+                                    <option value="Hours">Hours</option>
+                                    <option value="Trips">Trips</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="field-group">
-                        <label class="field-label">Detailed Requirements Statement</label>
-                        <textarea id="field-specs" rows="5" placeholder="Specify item details, structural volumes, or logistics needs clearly to avoid vague quotes..." required></textarea>
+
+                    <!-- Logistics & Frictionless Capture -->
+                    <div class="form-section">
+                        <div class="input-group">
+                            <label>Urgency</label>
+                            <div class="pill-container" id="pill-urgency">
+                                <div class="pill" onclick="app.selectPill('urgency', 'Urgent (24-48hrs)')">Urgent (24-48hrs)</div>
+                                <div class="pill active" onclick="app.selectPill('urgency', 'This Week')">This Week</div>
+                                <div class="pill" onclick="app.selectPill('urgency', 'Flexible')">Flexible</div>
+                            </div>
+                            <input type="hidden" id="val-urgency" value="This Week">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Logistics Preference</label>
+                            <div class="pill-container" id="pill-delivery">
+                                <div class="pill active" onclick="app.selectPill('delivery', 'Deliver to Site')">Deliver to Site</div>
+                                <div class="pill" onclick="app.selectPill('delivery', 'I will collect')">I will collect</div>
+                                <div class="pill" onclick="app.selectPill('delivery', 'Digital / Remote')">Digital / Remote</div>
+                            </div>
+                            <input type="hidden" id="val-delivery" value="Deliver to Site">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Target Location</label>
+                            <input type="text" id="req-location" placeholder="e.g., Lusaka CBD, Ndola, etc." required>
+                        </div>
                     </div>
-                    <div class="field-group">
-                        <label class="field-label">Corporate Contact Line</label>
-                        <input type="email" id="field-contact" placeholder="procurement@yourcompany.co.zm" required>
+
+                    <!-- Financials -->
+                    <div class="form-section">
+                        <div class="input-group">
+                            <label>Estimated Budget (ZMW)</label>
+                            <div class="pill-container" id="pill-budget">
+                                <div class="pill" onclick="app.selectPill('budget', 'Under K5,000')">Under K5,000</div>
+                                <div class="pill active" onclick="app.selectPill('budget', 'K5,000 - K20,000')">K5,000 - K20,000</div>
+                                <div class="pill" onclick="app.selectPill('budget', 'K20,000 - K100,000')">K20,000 - K100,000</div>
+                                <div class="pill" onclick="app.selectPill('budget', 'K100,000+')">K100,000+</div>
+                            </div>
+                            <input type="hidden" id="val-budget" value="K5,000 - K20,000">
+                        </div>
                     </div>
-                    <button type="submit" class="btn-action">Broadcast Request</button>
+
+                    <button type="submit" class="btn-primary">Submit to Network</button>
                 </form>
             </div>
         </div>
 
-        <!-- SCREEN 3: VENDOR ENTRY PIPELINE -->
-        <div id="screen-vendor-onboard" class="view-node hidden fade-engine">
-            <div class="card-panel" style="max-width: 600px; margin: 0 auto;">
-                <h2>Vendor Onboarding Terminal</h2>
-                <p class="panel-desc">Join the network to receive direct procurement matches from corporate clients across Zambia.</p>
-                
-                <form id="form-vendor-reg" class="form-layout" onsubmit="app.executeVendorSubmit(event)">
-                    <div class="field-group">
-                        <label class="field-label">Registered Business Name</label>
-                        <input type="text" id="v-name" placeholder="As registered with PACRA" required>
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">Target Industry Sector</label>
-                        <select id="v-sector" required>
-                            <option value="Construction & Materials">Construction & Heavy Materials</option>
-                            <option value="Professional Services">Professional & Corporate Services</option>
-                            <option value="Transport & Logistics">Transport, Haulage & Logistics</option>
-                        </select>
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">Lead Routing Email Address</label>
-                        <input type="email" id="v-email" placeholder="sales@yourcompany.zm" required>
-                    </div>
-                    <button type="submit" class="btn-action">Establish Network Profile</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- SCREEN 4: IDENTITY AUTH CLEARANCE -->
-        <div id="screen-auth-clearance" class="view-node hidden fade-engine">
-            <div class="card-panel" style="max-width: 400px; margin: 0 auto; text-align: center;">
-                <h2>Secure System Gateway</h2>
-                <p class="panel-desc">Provide access key to verify secure workspace routing.</p>
-                
-                <form class="form-layout" onsubmit="app.processClearance(event)">
-                    <div class="field-group">
-                        <input type="password" id="sys-pin" placeholder="••••" required style="text-align: center; font-size: 1.5rem; letter-spacing: 6px;">
-                    </div>
-                    <button type="submit" class="btn-action">Verify Access Key</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- SCREEN 5: VENDOR OPERATION PANEL (LIVE BUSINESS WORKSPACE) -->
-        <div id="screen-vendor-workspace" class="view-node hidden fade-engine">
-            <div class="card-panel">
-                <h2>Incoming Demand Pipeline</h2>
-                <p class="panel-desc">Review matching buyer briefs, adjust target milestones, and secure contact credentials.</p>
-                
-                <div class="table-scroller">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width: 45%;">Requirement Specifications</th>
-                                <th style="width: 15%;">Origin Node</th>
-                                <th style="width: 15%;">Current Status</th>
-                                <th style="width: 15%;">Contact Credentials</th>
-                                <th style="width: 10%;">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="vendor-leads-shell">
-                            <!-- Injected by JavaScript Core -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- SCREEN 6: INTERNAL COMMAND CENTRE (ADMIN CONTROL PLANE) -->
-        <div id="screen-admin-control" class="view-node hidden fade-engine">
-            <div class="card-panel">
-                <h2>Administrative Control Plane</h2>
-                <p class="panel-desc">System health metric telemetry and systemic operational event tracking logs.</p>
-                
-                <div class="dashboard-grid">
-                    <div class="tile-card">
-                        <div class="tile-label">System Transaction Volume</div>
-                        <div class="tile-value" id="pane-vol">0</div>
-                    </div>
-                    <div class="tile-card">
-                        <div class="tile-label">Automated Dispatches</div>
-                        <div class="tile-value" id="pane-mails">0</div>
-                    </div>
-                    <div class="tile-card">
-                        <div class="tile-label">Active Node Registry</div>
-                        <div class="tile-value" id="pane-vendors">0</div>
-                    </div>
-                </div>
-
-                <h3 style="font-size: 1.1rem; color: var(--text-pure); margin-bottom: 1rem;">System Operations Ledger</h3>
-                <div class="table-scroller">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Timestamp Event Indicator</th>
-                                <th>Operational Context</th>
-                                <th>Origin Sub-System</th>
-                                <th>Execution Resolution</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-ledger-shell">
-                            <!-- Injected by JavaScript Core -->
-                        </tbody>
-                    </table>
-                </div>
+        <!-- 3. SUPPLIER WORKSPACE (THE RESULT OF DATA CAPTURE) -->
+        <div id="view-vendor-hub" class="view-section hidden fade-in">
+            <h2>Live Market Demand</h2>
+            <p class="subtitle">Review active requests. You have the full context needed to quote accurately.</p>
+            
+            <div class="form-section" style="padding: 0; overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Requirement</th>
+                            <th>Logistics & Timeline</th>
+                            <th>Budget Context</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vendor-table-body">
+                        <!-- Injected by JS -->
+                    </tbody>
+                </table>
             </div>
         </div>
 
     </div>
 
-    <!-- ── SYSTEM CORE ARCHITECTURE & ROUTING ENGINE ── -->
+    <!-- ── APPLICATION LOGIC ── -->
     <script>
         const app = {
-            // Configuration Coordinates
-            endpoint: "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE",
-            session: null,
-            
-            // In-Memory Ground Truth Runtime State
-            registryLeads: [
-                { token: "RF-2026-901", text: "Urgent sourcing requirement: 650 structural steel sections for Lusaka infrastructure upgrade.", location: "Lusaka HQ", milestone: "notified", sourceContact: "procure@buildzambia.co.zm" },
-                { token: "RF-2026-902", text: "Long-haul freight tender: Heavy machinery transport layout from Ndola dry port to Copperbelt operations hub.", location: "Ndola Node", milestone: "engaged", sourceContact: "ops@copperbeltlogistics.zm" }
+            scriptURL: "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE",
+
+            // Mock State demonstrating how the new data capture translates to the dashboard
+            liveRequests: [
+                { item: "42.5N Portland Cement", qty: "600 Bags", delivery: "Deliver to Site (Lusaka)", urgency: "Urgent (24-48hrs)", budget: "K100,000+" },
+                { item: "Office Network Installation", qty: "1 Scope", delivery: "On-Site (Kitwe)", urgency: "Flexible", budget: "K20,000 - K100,000" }
             ],
 
-            // ── ROUTER INSTANTIATION ──
-            navigate: function(targetNode) {
-                // View Transition Lock
-                document.querySelectorAll('.view-node').forEach(node => node.classList.add('hidden'));
-                const element = document.getElementById(`screen-${targetNode}`);
-                if (element) {
-                    element.classList.remove('hidden');
-                    element.classList.add('fade-engine');
-                }
-                this.syncHeaderNavigation(targetNode);
-            },
-
-            syncHeaderNavigation: function(node) {
-                const nav = document.getElementById('app-nav-slots');
-                if (node.endsWith('workspace') || node.endsWith('control')) {
-                    nav.innerHTML = `<button class="control-btn" style="color: var(--status-warning);" onclick="app.destroySession()">Terminate Session</button>`;
-                } else {
-                    nav.innerHTML = `
-                        <button class="nav-link" onclick="app.navigate('vendor-onboard')">Vendor Registration</button>
-                        <button class="nav-link" onclick="app.navigate('auth-clearance')">Workspace Login</button>
-                        <button class="btn-premium" onclick="app.navigate('buyer-request')">Get Quotes</button>
-                    `;
-                }
-            },
-
-            dispatchHUDMessage: function(msg) {
-                const toast = document.getElementById("hud-toast");
-                toast.innerText = msg;
-                toast.classList.add("active");
-                setTimeout(() => toast.classList.remove("active"), 3500);
-            },
-
-            // ── WEBHOOK PIPELINE WITH STRICT INTEGRATION CONSTANTS ──
-            transmitPayload: async function(package) {
-                // Production Safe Guard: Explicitly command background infrastructure to run structural email actions
-                package.triggerEmail = true;
-                package.metadataTimestamp = new Date().toISOString();
-
-                // Target current visible active view submit button to build responsive processing layout
-                const workingScreen = document.querySelector('.view-node:not(.hidden)');
-                const submitTrigger = workingScreen ? workingScreen.querySelector('button[type="submit"]') : null;
-                let fallbackLabel = "";
+            navigate: function(viewId) {
+                document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+                document.getElementById(`view-${viewId}`).classList.remove('hidden');
                 
-                if (submitTrigger) {
-                    fallbackLabel = submitTrigger.innerText;
-                    submitTrigger.innerText = "Executing Request Handshake...";
-                    submitTrigger.disabled = true;
-                }
+                if(viewId === 'vendor-hub') this.renderVendorTable();
+            },
+
+            // Frictionless Pill Selector Logic
+            selectPill: function(group, value) {
+                // Update UI state
+                const container = document.getElementById(`pill-${group}`);
+                container.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+                event.target.classList.add('active');
+                
+                // Update hidden input for payload submission
+                document.getElementById(`val-${group}`).value = value;
+            },
+
+            submitRequest: async function(e) {
+                e.preventDefault();
+                
+                // Compile the robust data profile
+                const payload = {
+                    action: "new_market_request",
+                    item: document.getElementById('req-item').value,
+                    quantity: `${document.getElementById('req-qty').value} ${document.getElementById('req-unit').value}`,
+                    urgency: document.getElementById('val-urgency').value,
+                    deliveryPreference: document.getElementById('val-delivery').value,
+                    location: document.getElementById('req-location').value,
+                    budgetRange: document.getElementById('val-budget').value
+                };
+
+                const btn = e.target.querySelector('button[type="submit"]');
+                const originalText = btn.innerText;
+                btn.innerText = "Processing...";
+                btn.disabled = true;
 
                 try {
-                    // INFRASTRUCTURE HOOK: Ready out of the box when deployment link is assigned
+                    // Note: Email notifications explicitly placed on hold per current development phase.
+                    // Focus is strictly on UI refinement and accurate data insertion to the Apps Script DB.
                     /*
-                    const response = await fetch(this.endpoint, {
+                    await fetch(this.scriptURL, {
                         method: 'POST',
                         mode: 'no-cors',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(package)
+                        body: JSON.stringify(payload)
                     });
                     */
-                    await new Promise(resolve => setTimeout(resolve, 600)); // Minimal latency rendering simulation
-                    return { status: "resolved_success" };
-                } catch (err) {
-                    console.error("Critical Network Handshake Drop:", err);
-                    this.dispatchHUDMessage("Transaction connection error. Data persistence cached.");
-                    return { status: "failed" };
-                } finally {
-                    if (submitTrigger) {
-                        submitTrigger.innerText = fallbackLabel;
-                        submitTrigger.disabled = false;
-                    }
-                }
-            },
-
-            // ── HANDLERS FOR PUBLIC TRANSFERS ──
-            executeBuyerSubmit: async function(e) {
-                e.preventDefault();
-                const data = {
-                    executionAction: "procurement_intent",
-                    category: document.getElementById('field-cat').value,
-                    specifications: document.getElementById('field-specs').value,
-                    contact: document.getElementById('field-contact').value
-                };
-                
-                await this.transmitPayload(data);
-                this.dispatchHUDMessage("Procurement request successfully broadcasted across matching nodes.");
-                e.target.reset();
-                this.navigate('home');
-            },
-
-            executeVendorSubmit: async function(e) {
-                e.preventDefault();
-                const data = {
-                    executionAction: "vendor_instantiation",
-                    entityName: document.getElementById('v-name').value,
-                    sector: document.getElementById('v-sector').value,
-                    routingContact: document.getElementById('v-email').value
-                };
-                
-                await this.transmitPayload(data);
-                this.dispatchHUDMessage("Vendor verification pending. Network verification log deployed.");
-                e.target.reset();
-                this.navigate('home');
-            },
-
-            // ── SECURE WORKSPACE SIGNALS ──
-            processClearance: async function(e) {
-                e.preventDefault();
-                const identityToken = document.getElementById('sys-pin').value.trim().toLowerCase();
-                
-                if (identityToken === "biz") {
-                    this.session = { contextualAccess: "vendor_node" };
-                    this.renderVendorPanel();
-                    this.navigate('vendor-workspace');
-                    this.dispatchHUDMessage("Secure Access Granted: Connected to Vendor Pipeline Core");
-                } else if (identityToken === "admin") {
-                    this.session = { contextualAccess: "admin_control_plane" };
-                    this.renderAdminPanel();
-                    this.navigate('admin-control');
-                    this.dispatchHUDMessage("Secure Access Granted: Admin System Workspace Active");
-                } else {
-                    this.dispatchHUDMessage("Access key verification failed. Threat vector signature logged.");
-                }
-                e.target.reset();
-            },
-
-            destroySession: function() {
-                this.session = null;
-                this.navigate('home');
-                this.dispatchHUDMessage("Operational session torn down cleanly.");
-            },
-
-            // ── INTERACTIVE WORKSPACE ENGINE ──
-            renderVendorPanel: function() {
-                const targetShell = document.getElementById('vendor-leads-shell');
-                targetShell.innerHTML = this.registryLeads.map(lead => `
-                    <tr>
-                        <td style="font-weight: 500; color: var(--text-pure); line-height: 1.4;">${lead.text}</td>
-                        <td style="color: var(--text-dim); font-size: 0.85rem;">${lead.location}</td>
-                        <td>
-                            <select class="selector-inline" onchange="app.executeMilestoneShift('${lead.token}', this.value)">
-                                <option value="notified" ${lead.milestone === 'notified' ? 'selected' : ''}>Notified</option>
-                                <option value="engaged" ${lead.milestone === 'engaged' ? 'selected' : ''}>Engaged</option>
-                                <option value="responded" ${lead.milestone === 'responded' ? 'selected' : ''}>Responded</option>
-                            </select>
-                        </td>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <span style="font-family: monospace; font-size: 0.8rem; color: var(--text-dim);">${lead.sourceContact.substring(0, 5)}...</span>
-                                <button class="control-btn" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="app.executeClipboardCopy('${lead.sourceContact}')">Copy</button>
-                            </div>
-                        </td>
-                        <td>
-                            <button class="control-btn" style="border-color: var(--accent-blue); color: var(--accent-blue);" onclick="app.dispatchHUDMessage('Opening extended specification sheet file...')">Inspect</button>
-                        </td>
-                    </tr>
-                `).join('');
-            },
-
-            executeClipboardCopy: function(text) {
-                navigator.clipboard.writeText(text).then(() => {
-                    this.dispatchHUDMessage(`Contact credentials copied to clipboard.`);
-                });
-            },
-
-            executeMilestoneShift: async function(token, modifiedState) {
-                const referenceIndex = this.registryLeads.findIndex(item => item.token === token);
-                if (referenceIndex > -1) {
-                    this.registryLeads[referenceIndex].milestone = modifiedState;
+                    await new Promise(r => setTimeout(r, 600)); // Simulate DB write
                     
-                    // Fire network webhook updating data row and explicitly telling backend to notify buyer
-                    await this.transmitPayload({
-                        executionAction: "milestone_shift_event",
-                        targetRecordToken: token,
-                        assignedState: modifiedState,
-                        triggerEmail: true // Crucial back-end instruction hook
+                    // Add to local state for demo purposes
+                    this.liveRequests.unshift({
+                        item: payload.item,
+                        qty: payload.quantity,
+                        delivery: `${payload.deliveryPreference} (${payload.location})`,
+                        urgency: payload.urgency,
+                        budget: payload.budgetRange
                     });
+
+                    alert("Requirement successfully posted to the marketplace.");
+                    e.target.reset();
                     
-                    this.dispatchHUDMessage(`Milestone shifted to ${modifiedState.toUpperCase()}. Automated alert dispatched.`);
-                    this.renderVendorPanel();
+                    // Reset pills to defaults
+                    this.selectPill('urgency', 'This Week');
+                    this.selectPill('delivery', 'Deliver to Site');
+                    this.selectPill('budget', 'K5,000 - K20,000');
+                    
+                    this.navigate('vendor-hub');
+
+                } catch (error) {
+                    console.error("Submission failed:", error);
+                    alert("Network error.");
+                } finally {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
                 }
             },
 
-            // ── ADMINISTRATIVE PANEL TELEMETRY ──
-            renderAdminPanel: function() {
-                // Populate Metric Grid Elements
-                document.getElementById('pane-vol').innerText = "1,492";
-                document.getElementById('pane-mails').innerText = "3,840";
-                document.getElementById('pane-vendors').innerText = "215";
-
-                const systemLogs = [
-                    { time: "11:42:01", event: "RFP Distribution Complete", module: "Broadcast Engine", state: "Success" },
-                    { time: "11:39:14", event: "Milestone Hook Mutation", module: "Vendor Workspace", state: "Success" },
-                    { time: "10:14:52", event: "Network Profile Initialization", module: "Onboarding Ingress", state: "Auditing" }
-                ];
-
-                const ledgerShell = document.getElementById('admin-ledger-shell');
-                ledgerShell.innerHTML = systemLogs.map(log => `
+            renderVendorTable: function() {
+                const tbody = document.getElementById('vendor-table-body');
+                tbody.innerHTML = this.liveRequests.map(req => `
                     <tr>
-                        <td style="font-family: monospace; color: var(--text-dim); font-size: 0.85rem;">${log.time}</td>
-                        <td style="font-weight: 500; color: var(--text-pure);">${log.event}</td>
-                        <td style="color: var(--text-dim);">${log.module}</td>
                         <td>
-                            <span class="milestone-tag ${log.state === 'Success' ? 'responded' : 'notified'}">
-                                ${log.state}
-                            </span>
+                            <div style="font-weight: 600; color: var(--text-main); margin-bottom: 0.2rem;">${req.item}</div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem;">Volume: ${req.qty}</div>
+                        </td>
+                        <td>
+                            <div style="margin-bottom: 0.4rem; font-size: 0.9rem;">${req.delivery}</div>
+                            <span class="tag ${req.urgency.includes('Urgent') ? 'urgent' : ''}">${req.urgency}</span>
+                        </td>
+                        <td>
+                            <span class="tag budget">${req.budget}</span>
+                        </td>
+                        <td>
+                            <button style="background: transparent; border: 1px solid var(--border-focus); color: var(--text-main); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Submit Quote</button>
                         </td>
                     </tr>
                 `).join('');
             }
         };
 
-        // Initialize App Canvas Immediately on Load Loop
+        // Init
         window.onload = () => app.navigate('home');
     </script>
 </body>
