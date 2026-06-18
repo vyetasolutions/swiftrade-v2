@@ -6,7 +6,7 @@
     <title>swifTrade | The Demand-First Marketplace</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ── HIGH-END MINIMALIST DESIGN TOKENS (LINEAR / APPLE INFLUENCE) ── */
+        /* ── HIGH-END MINIMALIST DESIGN TOKENS ── */
         :root {
             --bg-base: #000000;
             --bg-surface: #0A0A0A;
@@ -16,7 +16,7 @@
             --border-focus: #404040;
             
             --brand-primary: #FFFFFF;
-            --brand-accent: #0071E3; /* Apple Blue */
+            --brand-accent: #0071E3; 
             
             --text-main: #F5F5F7;
             --text-muted: #A1A1A6;
@@ -32,73 +32,50 @@
         
         body { background-color: var(--bg-base); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
 
-        /* ── UTILITIES ── */
         .hidden { display: none !important; }
         .fade-in { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ── NAVIGATION ── */
         nav {
-            padding: 1.2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-dim);
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border-dim); background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100;
         }
         .brand { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.5px; cursor: pointer; color: var(--brand-primary); }
         .nav-links { display: flex; gap: 1.5rem; align-items: center; }
         .nav-link { background: none; border: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: var(--transition); }
         .nav-link:hover { color: var(--brand-primary); }
 
-        /* ── LAYOUT ── */
+        /* ── LAYOUT & TYPOGRAPHY ── */
         .container { width: 90%; max-width: 1000px; margin: 4rem auto; flex-grow: 1; }
-        
-        /* Typography */
         h1 { font-size: 3rem; font-weight: 700; letter-spacing: -1.5px; margin-bottom: 1rem; line-height: 1.1; }
         h2 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 0.5rem; }
         p.subtitle { color: var(--text-muted); font-size: 1.1rem; line-height: 1.5; margin-bottom: 2.5rem; max-width: 600px; }
 
         /* ── FRICTIONLESS FORM CONTROLS ── */
-        .form-section {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-dim);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-        }
-
+        .form-section { background: var(--bg-surface); border: 1px solid var(--border-dim); border-radius: var(--radius-lg); padding: 2.5rem; margin-bottom: 2rem; }
         .input-group { margin-bottom: 1.5rem; }
         label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; }
         
         input[type="text"], input[type="number"], select {
             width: 100%; background: var(--bg-elevated); border: 1px solid var(--border-dim);
-            color: var(--text-main); padding: 1rem; border-radius: var(--radius-md);
-            font-size: 1rem; transition: var(--transition);
+            color: var(--text-main); padding: 1rem; border-radius: var(--radius-md); font-size: 1rem; transition: var(--transition);
         }
         input:focus, select:focus { outline: none; border-color: var(--border-focus); background: #1A1A1A; }
 
-        /* Interactive Pill Selectors (Reduces Typing) */
+        /* Interactive Pill Selectors */
         .pill-container { display: flex; flex-wrap: wrap; gap: 0.75rem; }
         .pill {
-            background: var(--bg-elevated); border: 1px solid var(--border-dim);
-            color: var(--text-muted); padding: 0.75rem 1.25rem; border-radius: 100px;
-            font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: var(--transition);
-            user-select: none;
+            background: var(--bg-elevated); border: 1px solid var(--border-dim); color: var(--text-muted);
+            padding: 0.75rem 1.25rem; border-radius: 100px; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: var(--transition); user-select: none;
         }
         .pill:hover { border-color: var(--border-focus); color: var(--text-main); }
         .pill.active { background: var(--brand-primary); color: var(--bg-base); border-color: var(--brand-primary); font-weight: 600; }
 
-        /* Buttons */
         .btn-primary {
-            background: var(--brand-accent); color: #fff; border: none;
-            padding: 1rem 2rem; border-radius: var(--radius-md); font-size: 1rem;
-            font-weight: 600; cursor: pointer; transition: var(--transition); width: 100%;
+            background: var(--brand-accent); color: #fff; border: none; padding: 1rem 2rem; border-radius: var(--radius-md);
+            font-size: 1rem; font-weight: 600; cursor: pointer; transition: var(--transition); width: 100%;
         }
         .btn-primary:hover { background: #005BB5; }
 
@@ -111,43 +88,52 @@
         .tag { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; border: 1px solid var(--border-dim); background: var(--bg-elevated); }
         .tag.urgent { color: #FF453A; border-color: rgba(255, 69, 58, 0.3); }
         .tag.budget { color: #32D74B; }
+        
+        /* Matching Score Indicator */
+        .match-score { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; border: 2px solid #32D74B; color: #32D74B; font-weight: 700; font-size: 0.85rem; }
+        .match-score.medium { border-color: #FF9F0A; color: #FF9F0A; }
 
     </style>
 </head>
 <body>
 
-    <!-- ── NAVIGATION ── -->
     <nav>
         <div class="brand" onclick="app.navigate('home')">swifTrade</div>
-        <div class="nav-links" id="nav-dynamic">
+        <div class="nav-links">
             <button class="nav-link" onclick="app.navigate('vendor-hub')">Supplier Workspace</button>
         </div>
     </nav>
 
     <div class="container" id="app-viewport">
 
-        <!-- 1. HOME / ENTRY PITCH -->
         <div id="view-home" class="view-section fade-in">
             <div style="text-align: center; max-width: 700px; margin: 0 auto 4rem auto;">
                 <h1>Skip the endless phone calls.</h1>
-                <p class="subtitle" style="margin: 0 auto 2.5rem auto;">Tell us exactly what your business needs, your budget, and when you need it. We instantly match you with verified suppliers who can actually deliver.</p>
+                <p class="subtitle" style="margin: 0 auto 2.5rem auto;">Tell us exactly what your business needs, your budget, and when you need it. Our matching engine instantly routes your request to verified suppliers equipped to deliver.</p>
                 <button class="btn-primary" style="width: auto; padding: 1rem 2.5rem;" onclick="app.navigate('request-builder')">Post a Requirement</button>
             </div>
         </div>
 
-        <!-- 2. FRICTIONLESS REQUEST BUILDER (DATA CAPTURE) -->
         <div id="view-request-builder" class="view-section hidden fade-in">
             <div style="max-width: 650px; margin: 0 auto;">
                 <h2>What do you need?</h2>
-                <p class="subtitle">Complete these parameters so suppliers can give you exact quotes.</p>
+                <p class="subtitle">Complete these parameters so our engine can match you to the right suppliers.</p>
                 
                 <form id="form-request" onsubmit="app.submitRequest(event)">
                     
-                    <!-- Core Item -->
                     <div class="form-section">
                         <div class="input-group">
+                            <label>Industry Category</label>
+                            <select id="req-category" required>
+                                <option value="">Select classification...</option>
+                                <option value="Construction & Materials">Construction & Heavy Materials</option>
+                                <option value="Professional Services">Professional & Corporate Services</option>
+                                <option value="Transport & Logistics">Transport, Haulage & Logistics</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
                             <label>Product or Service Required</label>
-                            <input type="text" id="req-item" placeholder="e.g., 42.5N Portland Cement, Legal Consultation, Haulage Truck" required>
+                            <input type="text" id="req-item" placeholder="e.g., 42.5N Portland Cement, Haulage Truck" required>
                         </div>
                         <div style="display: flex; gap: 1rem;">
                             <div class="input-group" style="flex: 1;">
@@ -160,14 +146,13 @@
                                     <option value="Pieces">Pieces</option>
                                     <option value="Bags">Bags</option>
                                     <option value="Tons">Tons</option>
-                                    <option value="Hours">Hours</option>
                                     <option value="Trips">Trips</option>
+                                    <option value="Hours">Hours</option>
                                 </select>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Logistics & Frictionless Capture -->
                     <div class="form-section">
                         <div class="input-group">
                             <label>Urgency</label>
@@ -190,12 +175,11 @@
                         </div>
 
                         <div class="input-group">
-                            <label>Target Location</label>
+                            <label>Target Location (City/Area)</label>
                             <input type="text" id="req-location" placeholder="e.g., Lusaka CBD, Ndola, etc." required>
                         </div>
                     </div>
 
-                    <!-- Financials -->
                     <div class="form-section">
                         <div class="input-group">
                             <label>Estimated Budget (ZMW)</label>
@@ -209,20 +193,24 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-primary">Submit to Network</button>
+                    <button type="submit" class="btn-primary">Submit to Network Engine</button>
                 </form>
             </div>
         </div>
 
-        <!-- 3. SUPPLIER WORKSPACE (THE RESULT OF DATA CAPTURE) -->
         <div id="view-vendor-hub" class="view-section hidden fade-in">
-            <h2>Live Market Demand</h2>
-            <p class="subtitle">Review active requests. You have the full context needed to quote accurately.</p>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+                <div>
+                    <h2>Live Market Demand</h2>
+                    <p class="subtitle" style="margin-bottom: 0;">Showing leads matched to: <strong style="color: var(--brand-primary)">Construction & Materials (Lusaka Profile)</strong></p>
+                </div>
+            </div>
             
             <div class="form-section" style="padding: 0; overflow-x: auto;">
                 <table class="data-table">
                     <thead>
                         <tr>
+                            <th style="width: 80px; text-align: center;">Match</th>
                             <th>Requirement</th>
                             <th>Logistics & Timeline</th>
                             <th>Budget Context</th>
@@ -230,24 +218,60 @@
                         </tr>
                     </thead>
                     <tbody id="vendor-table-body">
-                        <!-- Injected by JS -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
         </div>
 
     </div>
 
-    <!-- ── APPLICATION LOGIC ── -->
     <script>
         const app = {
             scriptURL: "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE",
 
-            // Mock State demonstrating how the new data capture translates to the dashboard
+            // Simulating the logged-in Vendor's Profile configuration
+            currentVendorProfile: {
+                sector: "Construction & Materials",
+                baseLocation: "Lusaka"
+            },
+
+            // Active database state
             liveRequests: [
-                { item: "42.5N Portland Cement", qty: "600 Bags", delivery: "Deliver to Site (Lusaka)", urgency: "Urgent (24-48hrs)", budget: "K100,000+" },
-                { item: "Office Network Installation", qty: "1 Scope", delivery: "On-Site (Kitwe)", urgency: "Flexible", budget: "K20,000 - K100,000" }
+                { category: "Construction & Materials", item: "42.5N Portland Cement", qty: "600 Bags", delivery: "Deliver to Site", location: "Lusaka South", urgency: "Urgent (24-48hrs)", budget: "K100,000+", matchScore: 98 },
+                { category: "Construction & Materials", item: "Reinforcement Steel Rebars", qty: "2 Tons", delivery: "I will collect", location: "Kafue", urgency: "This Week", budget: "K20,000 - K100,000", matchScore: 75 }
             ],
+
+            // ── MATCHING ALGORITHM ──
+            // Evaluates an incoming request against the vendor's capabilities
+            matchingEngine: {
+                evaluate: function(requestData, vendorProfile) {
+                    let score = 0;
+                    
+                    // Rule 1: Hard Filter - Industry Category must match.
+                    if (requestData.category !== vendorProfile.sector) {
+                        return { isMatch: false, score: 0 };
+                    }
+                    score += 60; // Base score for correct industry
+
+                    // Rule 2: Geographic Relevance
+                    const reqLoc = requestData.location.toLowerCase();
+                    const venLoc = vendorProfile.baseLocation.toLowerCase();
+                    
+                    if (reqLoc.includes(venLoc) || venLoc.includes(reqLoc)) {
+                        score += 35; // Exact or highly correlated city match
+                    } else {
+                        score += 10; // Provincial/out-of-town drop off
+                    }
+
+                    // Rule 3: Arbitrary data richness bonus (simulated)
+                    if (requestData.budgetRange !== "Under K5,000") score += 3;
+
+                    return { 
+                        isMatch: score >= 60, // Minimum threshold to display on dashboard
+                        score: Math.min(score, 99) 
+                    };
+                }
+            },
 
             navigate: function(viewId) {
                 document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
@@ -256,25 +280,21 @@
                 if(viewId === 'vendor-hub') this.renderVendorTable();
             },
 
-            // Frictionless Pill Selector Logic
             selectPill: function(group, value) {
-                // Update UI state
                 const container = document.getElementById(`pill-${group}`);
                 container.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
                 event.target.classList.add('active');
-                
-                // Update hidden input for payload submission
                 document.getElementById(`val-${group}`).value = value;
             },
 
             submitRequest: async function(e) {
                 e.preventDefault();
                 
-                // Compile the robust data profile
+                // 1. Capture Form Data
                 const payload = {
-                    action: "new_market_request",
+                    category: document.getElementById('req-category').value,
                     item: document.getElementById('req-item').value,
-                    quantity: `${document.getElementById('req-qty').value} ${document.getElementById('req-unit').value}`,
+                    qty: `${document.getElementById('req-qty').value} ${document.getElementById('req-unit').value}`,
                     urgency: document.getElementById('val-urgency').value,
                     deliveryPreference: document.getElementById('val-delivery').value,
                     location: document.getElementById('req-location').value,
@@ -283,32 +303,34 @@
 
                 const btn = e.target.querySelector('button[type="submit"]');
                 const originalText = btn.innerText;
-                btn.innerText = "Processing...";
+                btn.innerText = "Evaluating Matrices...";
                 btn.disabled = true;
 
                 try {
-                    // Note: Email notifications explicitly placed on hold per current development phase.
-                    // Focus is strictly on UI refinement and accurate data insertion to the Apps Script DB.
-                    /*
-                    await fetch(this.scriptURL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    */
-                    await new Promise(r => setTimeout(r, 600)); // Simulate DB write
+                    await new Promise(r => setTimeout(r, 600)); // Simulating DB POST Delay
                     
-                    // Add to local state for demo purposes
-                    this.liveRequests.unshift({
-                        item: payload.item,
-                        qty: payload.quantity,
-                        delivery: `${payload.deliveryPreference} (${payload.location})`,
-                        urgency: payload.urgency,
-                        budget: payload.budgetRange
-                    });
+                    // 2. Run Matching Engine
+                    const matchResult = this.matchingEngine.evaluate(payload, this.currentVendorProfile);
+                    
+                    // 3. Conditional Dashboard Routing
+                    if (matchResult.isMatch) {
+                        // If it matches the Construction/Lusaka profile, push it to the active array
+                        this.liveRequests.unshift({
+                            category: payload.category,
+                            item: payload.item,
+                            qty: payload.qty,
+                            delivery: payload.deliveryPreference,
+                            location: payload.location,
+                            urgency: payload.urgency,
+                            budget: payload.budgetRange,
+                            matchScore: matchResult.score
+                        });
+                        alert(`Request posted. It triggered a ${matchResult.score}% match with our mock supplier profile.`);
+                    } else {
+                        // It goes to the DB, but is NOT routed to this specific mock supplier
+                        alert(`Request posted to the database. However, since it is for "${payload.category}" or outside the immediate parameter zone, it bypassed the current mock supplier's dashboard.`);
+                    }
 
-                    alert("Requirement successfully posted to the marketplace.");
                     e.target.reset();
                     
                     // Reset pills to defaults
@@ -329,21 +351,30 @@
 
             renderVendorTable: function() {
                 const tbody = document.getElementById('vendor-table-body');
+                
+                if (this.liveRequests.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 3rem; color: var(--text-muted);">No inbound matches fitting your active profile parameters.</td></tr>`;
+                    return;
+                }
+
                 tbody.innerHTML = this.liveRequests.map(req => `
                     <tr>
+                        <td style="text-align: center;">
+                            <div class="match-score ${req.matchScore < 85 ? 'medium' : ''}" title="Match Relevance Score">${req.matchScore}</div>
+                        </td>
                         <td>
                             <div style="font-weight: 600; color: var(--text-main); margin-bottom: 0.2rem;">${req.item}</div>
                             <div style="color: var(--text-muted); font-size: 0.85rem;">Volume: ${req.qty}</div>
                         </td>
                         <td>
-                            <div style="margin-bottom: 0.4rem; font-size: 0.9rem;">${req.delivery}</div>
+                            <div style="margin-bottom: 0.4rem; font-size: 0.9rem;">${req.delivery} (${req.location})</div>
                             <span class="tag ${req.urgency.includes('Urgent') ? 'urgent' : ''}">${req.urgency}</span>
                         </td>
                         <td>
                             <span class="tag budget">${req.budget}</span>
                         </td>
                         <td>
-                            <button style="background: transparent; border: 1px solid var(--border-focus); color: var(--text-main); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Submit Quote</button>
+                            <button style="background: transparent; border: 1px solid var(--border-focus); color: var(--text-main); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 500;">Reveal & Quote</button>
                         </td>
                     </tr>
                 `).join('');
