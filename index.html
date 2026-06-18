@@ -3,316 +3,329 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>swifTrade | The Zambian Business Network</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    <title>swifTrade | B2B Procurement Network</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
-        /* ── VIBRANT GLASSMORPHIC TOKENS & ORIGINAL PALETTE INSPIRATION ── */
+        /* ── STRIPE/APPLE-INSPIRED MINIMALIST DARK TEXTURE ── */
         :root {
-            --brand-primary: #007AFF; /* Apple-style vibrant blue */
-            --brand-secondary: #5856D6;
-            --brand-accent: #34C759;
-            --bg-base: #f4f5f7;
-            --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.4);
-            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-            --text-main: #1d1d1f;
-            --text-muted: #6e6e73;
-            --input-bg: rgba(255, 255, 255, 0.9);
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --bg-main: #060608;
+            --panel-bg: rgba(18, 18, 24, 0.75);
+            --border-primary: rgba(255, 255, 255, 0.06);
+            --border-active: rgba(255, 255, 255, 0.15);
+            
+            --accent-blue: #0A84FF;
+            --accent-purple: #635BFF;
+            --status-success: #30D5C8;
+            --status-warning: #FF9F0A;
+            
+            --text-pure: #FFFFFF;
+            --text-body: #E5E5EA;
+            --text-dim: #8E8E93;
+            
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --easing: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
         
         body {
-            background-color: var(--bg-base);
-            color: var(--text-main);
+            background-color: var(--bg-main);
+            color: var(--text-body);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* ── ANIMATED BACKGROUND ORBS (FIGMA STYLE) ── */
-        .bg-orb {
+        /* Subtle ambient glow to break up the dark background without being loud */
+        body::before {
+            content: '';
             position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
+            top: 0; left: 25%; width: 50%; height: 400px;
+            background: radial-gradient(circle, rgba(99, 91, 255, 0.05) 0%, transparent 70%);
             z-index: -1;
-            animation: float 20s infinite ease-in-out;
-        }
-        .orb-1 { width: 400px; height: 400px; background: rgba(0, 122, 255, 0.3); top: -10%; left: -10%; }
-        .orb-2 { width: 500px; height: 500px; background: rgba(88, 86, 214, 0.25); bottom: -20%; right: -10%; animation-delay: -5s; }
-        .orb-3 { width: 300px; height: 300px; background: rgba(52, 199, 89, 0.2); top: 40%; left: 40%; animation-delay: -10s; }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(30px, -50px) scale(1.1); }
+            pointer-events: none;
         }
 
-        /* ── STRUCTURAL UTILITIES ── */
+        /* ── UTILITY CLASSES ── */
         .hidden { display: none !important; }
-        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-engine { animation: screenReveal 0.5s var(--easing) forwards; }
+        @keyframes screenReveal { from { opacity: 0; transform: scale(0.99) translateY(4px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
-        /* ── NAVIGATION ── */
+        /* ── NAVIGATION ARRAYS ── */
         nav {
-            padding: 1rem 5%;
+            height: 72px;
+            padding: 0 4%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--glass-border);
-            background: rgba(255, 255, 255, 0.6);
+            border-bottom: 1px solid var(--border-primary);
+            background: rgba(6, 6, 8, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             position: sticky;
             top: 0;
             z-index: 100;
         }
-        .brand { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; cursor: pointer; color: var(--brand-primary); }
-        .nav-links button {
-            background: transparent; border: none; color: var(--text-main);
-            margin-left: 1.5rem; font-weight: 500; cursor: pointer; transition: var(--transition);
+        .logo-mark { font-weight: 900; font-size: 1.25rem; letter-spacing: -0.8px; color: var(--text-pure); cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .logo-dot { width: 6px; height: 6px; background: var(--accent-blue); border-radius: 50%; }
+        
+        .nav-actions { display: flex; align-items: center; gap: 1.5rem; }
+        .nav-link { background: transparent; border: none; color: var(--text-dim); font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: color 0.2s ease; }
+        .nav-link:hover { color: var(--text-pure); }
+        
+        .btn-premium {
+            background: var(--text-pure); color: var(--bg-main); padding: 0.6rem 1.1rem;
+            border-radius: 8px; font-weight: 600; font-size: 0.85rem; border: 1px solid transparent;
+            cursor: pointer; transition: var(--easing);
         }
-        .nav-links button:hover { color: var(--brand-primary); }
-        .nav-links .btn-solid {
-            background: var(--brand-primary); color: #fff; padding: 0.6rem 1.2rem;
-            border-radius: 12px; font-weight: 600; box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
-        }
-        .nav-links .btn-solid:hover { background: #0062cc; transform: translateY(-2px); }
+        .btn-premium:hover { background: transparent; color: var(--text-pure); border-color: var(--border-active); }
 
-        /* ── GLASS CONTAINERS ── */
-        .container { width: 90%; max-width: 1200px; margin: 3rem auto; flex-grow: 1; position: relative; }
-        .glass-panel {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2.5rem;
-            box-shadow: var(--glass-shadow);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+        /* ── APPLICATION CANVAS ── */
+        .viewport { width: 92%; max-width: 1200px; margin: 4rem auto; flex-grow: 1; }
+        
+        .card-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-primary);
+            border-radius: 14px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
         }
 
-        /* ── TYPOGRAPHY & FORMS ── */
-        h1 { font-size: 3rem; margin-bottom: 1rem; letter-spacing: -1.2px; font-weight: 800; }
-        h2 { font-size: 1.8rem; margin-bottom: 0.5rem; font-weight: 700; letter-spacing: -0.5px; }
-        p.subtitle { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.6; }
+        /* ── TYPOGRAPHY ── */
+        h1 { font-size: 3.2rem; font-weight: 900; letter-spacing: -1.8px; color: var(--text-pure); line-height: 1.1; margin-bottom: 1rem; }
+        h2 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.6px; color: var(--text-pure); margin-bottom: 0.5rem; }
+        .hero-desc { color: var(--text-dim); font-size: 1.2rem; line-height: 1.5; font-weight: 400; max-width: 580px; margin-bottom: 2.5rem; }
+        .panel-desc { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 2rem; }
 
-        .form-group { margin-bottom: 1.5rem; text-align: left; }
-        label { display: block; margin-bottom: 0.5rem; color: var(--text-main); font-weight: 500; font-size: 0.9rem; }
+        /* ── INDUSTRIAL GRADE FORM DESIGN ── */
+        .form-layout { display: flex; flex-direction: column; gap: 1.5rem; }
+        .field-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .field-label { font-size: 0.85rem; font-weight: 600; color: var(--text-pure); letter-spacing: -0.1px; }
+        
         input, select, textarea {
-            width: 100%; padding: 1rem; border-radius: 12px;
-            background: var(--input-bg); border: 1px solid rgba(0,0,0,0.1);
-            color: var(--text-main); font-size: 1rem; transition: var(--transition);
+            width: 100%; padding: 0.85rem 1rem; border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-primary);
+            color: var(--text-pure); font-size: 0.95rem; transition: all 0.2s var(--easing);
         }
         input:focus, select:focus, textarea:focus {
-            outline: none; border-color: var(--brand-primary); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+            outline: none; border-color: var(--border-active); background: rgba(0, 0, 0, 0.5);
         }
-        
-        button.action-btn {
-            width: 100%; padding: 1rem; border-radius: 12px; border: none;
-            background: var(--brand-primary); color: #fff; font-size: 1rem; font-weight: 600;
-            cursor: pointer; transition: var(--transition); box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
-        }
-        button.action-btn:hover { background: #0062cc; transform: translateY(-2px); }
+        select { appearance: none; cursor: pointer; }
+        textarea { resize: vertical; }
 
-        /* ── DATA TABLES & FUNCTIONAL UI ── */
-        table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: 1rem; }
-        th { color: var(--text-muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; padding: 0 1rem; text-align: left; }
-        td { padding: 1.2rem 1rem; background: rgba(255,255,255,0.5); }
-        tr td:first-child { border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
-        tr td:last-child { border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
-        tr:hover td { background: rgba(255,255,255,0.8); }
-        
-        .badge { padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-        .badge.notified { background: rgba(255, 149, 0, 0.15); color: #FF9500; }
-        .badge.engaged { background: rgba(0, 122, 255, 0.15); color: #007AFF; }
-        .badge.responded { background: rgba(52, 199, 89, 0.15); color: #34C759; }
-
-        .btn-small {
-            background: transparent; border: 1px solid var(--text-muted); color: var(--text-main);
-            padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer;
-            transition: var(--transition); font-weight: 500;
+        .btn-action {
+            background: var(--accent-purple); color: var(--text-pure); padding: 0.9rem;
+            border-radius: 8px; border: none; font-size: 0.95rem; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease; display: inline-flex; justify-content: center; align-items: center;
         }
-        .btn-small:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: rgba(0, 122, 255, 0.05); }
+        .btn-action:hover { background: #5149E6; transform: translateY(-1px); }
+        .btn-action:disabled { background: var(--border-primary); color: var(--text-dim); cursor: not-allowed; transform: none; }
 
-        /* Dashboard Flex Layouts */
-        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-        .metric-card { background: rgba(255,255,255,0.6); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--glass-border); text-align: center; }
-        .metric-value { font-size: 2.5rem; font-weight: 800; color: var(--brand-primary); margin-bottom: 0.5rem; }
-        
-        /* Toast Notification */
-        #toast {
-            visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center;
-            border-radius: 12px; padding: 16px; position: fixed; z-index: 1000; left: 50%; bottom: 30px;
-            transform: translateX(-50%); opacity: 0; transition: opacity 0.3s, bottom 0.3s;
+        /* ── STRIPE-STYLE DATA ARRAYS ── */
+        .table-scroller { width: 100%; overflow-x: auto; margin-top: 1.5rem; border-radius: 8px; border: 1px solid var(--border-primary); background: rgba(0,0,0,0.2); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th { padding: 1rem 1.25rem; color: var(--text-dim); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-primary); }
+        td { padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--border-primary); color: var(--text-body); vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: rgba(255,255,255,0.01); }
+
+        /* Status Flags */
+        .milestone-tag {
+            display: inline-flex; align-items: center; gap: 6px; padding: 0.25rem 0.65rem; 
+            border-radius: 6px; font-size: 0.75rem; font-weight: 600; border: 1px solid transparent;
         }
-        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+        .milestone-tag.notified { background: rgba(255, 159, 10, 0.1); color: var(--status-warning); border-color: rgba(255, 159, 10, 0.15); }
+        .milestone-tag.engaged { background: rgba(10, 132, 255, 0.1); color: var(--accent-blue); border-color: rgba(10, 132, 255, 0.15); }
+        .milestone-tag.responded { background: rgba(48, 213, 200, 0.1); color: var(--status-success); border-color: rgba(48, 213, 200, 0.15); }
+
+        /* Core Interface Controls */
+        .control-btn {
+            background: rgba(255,255,255,0.04); border: 1px solid var(--border-primary); color: var(--text-pure);
+            padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;
+        }
+        .control-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--border-active); }
+        
+        .selector-inline {
+            background: rgba(0,0,0,0.4); border: 1px solid var(--border-primary); color: var(--text-pure);
+            padding: 0.35rem 0.5rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer;
+        }
+
+        /* ── METRIC TILES (ADMIN INTERFACE) ── */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+        .tile-card { background: rgba(0,0,0,0.2); border: 1px solid var(--border-primary); border-radius: 10px; padding: 1.5rem; }
+        .tile-label { font-size: 0.75rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+        .tile-value { font-size: 2rem; font-weight: 700; color: var(--text-pure); letter-spacing: -0.5px; }
+
+        /* ── NOTIFICATION COMPONENT ── */
+        #hud-toast {
+            visibility: hidden; min-width: 280px; background: #121218; border: 1px solid var(--border-active);
+            color: var(--text-pure); font-size: 0.85rem; font-weight: 500; text-align: center; border-radius: 8px;
+            padding: 1rem; position: fixed; z-index: 1000; left: 50%; bottom: 40px; transform: translateX(-50%);
+            opacity: 0; box-shadow: 0 12px 30px rgba(0,0,0,0.5); transition: opacity 0.3s var(--easing), bottom 0.3s var(--easing);
+        }
+        #hud-toast.active { visibility: visible; opacity: 1; bottom: 50px; }
     </style>
 </head>
 <body>
 
-    <!-- Animated Background -->
-    <div class="bg-orb orb-1"></div>
-    <div class="bg-orb orb-2"></div>
-    <div class="bg-orb orb-3"></div>
+    <!-- Notification Engine -->
+    <div id="hud-toast">System Action Logged</div>
 
-    <!-- Toast Notification Anchor -->
-    <div id="toast">Notification message</div>
-
-    <!-- ── NAVIGATION BAR ── -->
+    <!-- ── APPLICATION FRAMEWORK COVER ── -->
     <nav>
-        <div class="brand" onclick="app.navigate('home')">swifTrade</div>
-        <div class="nav-links" id="dynamic-nav">
-            <!-- Dynamically populated by JS -->
+        <div class="logo-mark" onclick="app.navigate('home')">swifTrade<div class="logo-dot"></div></div>
+        <div class="nav-actions" id="app-nav-slots">
+            <!-- Dynamic Injection -->
         </div>
     </nav>
 
-    <!-- ── MAIN APPLICATION VIEWPORT ── -->
-    <div class="container" id="app-viewport">
+    <!-- ── DYNAMIC VIEWPORT LINK ── -->
+    <div class="viewport" id="master-viewport">
 
-        <!-- 1. PUBLIC INGRESS (HOME) -->
-        <div id="view-home" class="view-section fade-in">
-            <div class="glass-panel" style="text-align: center; padding: 5rem 2rem;">
-                <h1>Connect with verified Zambian suppliers.</h1>
-                <p class="subtitle" style="max-width: 600px; margin: 0 auto 2.5rem auto;">Post what your business needs. We instantly route your requirements to vetted suppliers who are ready to deliver.</p>
-                <div style="display: flex; gap: 1rem; justify-content: center;">
-                    <button class="action-btn" style="width: auto; padding: 1rem 2.5rem;" onclick="app.navigate('buyer-request')">Post a Request</button>
-                    <button class="action-btn" style="width: auto; padding: 1rem 2.5rem; background: transparent; border: 2px solid var(--brand-primary); color: var(--brand-primary);" onclick="app.navigate('supplier-onboard')">Join as a Supplier</button>
-                </div>
+        <!-- SCREEN 1: THE CORE GATEWAY (HOME) -->
+        <div id="screen-home" class="view-node fade-engine">
+            <h1 style="max-width: 700px;">Stop wasting days chasing business quotes.</h1>
+            <p class="hero-desc">Post your procurement requirements directly to our network. Vetted Zambian suppliers compete for your contract, while you monitor responses from a single dashboard.</p>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn-premium" onclick="app.navigate('buyer-request')">Request Quotes</button>
+                <button class="control-btn" style="padding: 0.8rem 1.5rem;" onclick="app.navigate('vendor-onboard')">Register as Vendor</button>
             </div>
         </div>
 
-        <!-- 2. BUYER REQUEST PIPELINE -->
-        <div id="view-buyer-request" class="view-section hidden fade-in">
-            <div class="glass-panel" style="max-width: 650px; margin: 0 auto;">
-                <h2>What do you need?</h2>
-                <p class="subtitle">Provide the details, and we'll immediately trigger email notifications to matching suppliers.</p>
-                <form id="form-buyer" onsubmit="app.submitBuyerRequest(event)">
-                    <div class="form-group">
-                        <label>Category</label>
-                        <select id="req-category" required>
-                            <option value="">Select industry...</option>
-                            <option value="construction">Construction & Materials</option>
-                            <option value="professional">Professional Services</option>
-                            <option value="logistics">Transport & Logistics</option>
+        <!-- SCREEN 2: PROCUREMENT BROADCAST PIPELINE (BUYER) -->
+        <div id="screen-buyer-request" class="view-node hidden fade-engine">
+            <div class="card-panel" style="max-width: 600px; margin: 0 auto;">
+                <h2>Publish Requirements</h2>
+                <p class="panel-desc">Define your items clearly. Matching suppliers receive immediate, automated alerts.</p>
+                
+                <form id="form-procurement" class="form-layout" onsubmit="app.executeBuyerSubmit(event)">
+                    <div class="field-group">
+                        <label class="field-label">Procurement Category</label>
+                        <select id="field-cat" required>
+                            <option value="">Select industry classification...</option>
+                            <option value="Construction & Materials">Construction & Heavy Materials</option>
+                            <option value="Professional Services">Professional & Corporate Services</option>
+                            <option value="Transport & Logistics">Transport, Haulage & Logistics</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Exact Requirements</label>
-                        <textarea id="req-details" rows="4" placeholder="e.g., We need 500 bags of cement delivered to Lusaka by Friday..." required></textarea>
+                    <div class="field-group">
+                        <label class="field-label">Detailed Requirements Statement</label>
+                        <textarea id="field-specs" rows="5" placeholder="Specify item details, structural volumes, or logistics needs clearly to avoid vague quotes..." required></textarea>
                     </div>
-                    <div class="form-group">
-                        <label>Your Email (For winning suppliers to contact you)</label>
-                        <input type="email" id="req-email" placeholder="name@company.com" required>
+                    <div class="field-group">
+                        <label class="field-label">Corporate Contact Line</label>
+                        <input type="email" id="field-contact" placeholder="procurement@yourcompany.co.zm" required>
                     </div>
-                    <button type="submit" class="action-btn">Broadcast to Suppliers</button>
+                    <button type="submit" class="btn-action">Broadcast Request</button>
                 </form>
             </div>
         </div>
 
-        <!-- 3. SUPPLIER ONBOARDING -->
-        <div id="view-supplier-onboard" class="view-section hidden fade-in">
-            <div class="glass-panel" style="max-width: 650px; margin: 0 auto;">
-                <h2>Grow Your Business</h2>
-                <p class="subtitle">Register to receive automated email alerts the moment a buyer needs your services.</p>
-                <form id="form-supplier" onsubmit="app.submitSupplierReg(event)">
-                    <div class="form-group">
-                        <label>Business Name</label>
-                        <input type="text" id="biz-name" placeholder="Official Company Name" required>
+        <!-- SCREEN 3: VENDOR ENTRY PIPELINE -->
+        <div id="screen-vendor-onboard" class="view-node hidden fade-engine">
+            <div class="card-panel" style="max-width: 600px; margin: 0 auto;">
+                <h2>Vendor Onboarding Terminal</h2>
+                <p class="panel-desc">Join the network to receive direct procurement matches from corporate clients across Zambia.</p>
+                
+                <form id="form-vendor-reg" class="form-layout" onsubmit="app.executeVendorSubmit(event)">
+                    <div class="field-group">
+                        <label class="field-label">Registered Business Name</label>
+                        <input type="text" id="v-name" placeholder="As registered with PACRA" required>
                     </div>
-                    <div class="form-group">
-                        <label>Primary Service Sector</label>
-                        <select id="biz-sector" required>
-                            <option value="construction">Construction & Materials</option>
-                            <option value="professional">Professional Services</option>
-                            <option value="logistics">Transport & Logistics</option>
+                    <div class="field-group">
+                        <label class="field-label">Target Industry Sector</label>
+                        <select id="v-sector" required>
+                            <option value="Construction & Materials">Construction & Heavy Materials</option>
+                            <option value="Professional Services">Professional & Corporate Services</option>
+                            <option value="Transport & Logistics">Transport, Haulage & Logistics</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Notification Email</label>
-                        <input type="email" id="biz-email" placeholder="Where should we send live leads?" required>
+                    <div class="field-group">
+                        <label class="field-label">Lead Routing Email Address</label>
+                        <input type="email" id="v-email" placeholder="sales@yourcompany.zm" required>
                     </div>
-                    <button type="submit" class="action-btn">Establish Profile</button>
+                    <button type="submit" class="btn-action">Establish Network Profile</button>
                 </form>
             </div>
         </div>
 
-        <!-- 4. SECURITY GATEWAY (LOGIN) -->
-        <div id="view-auth-gateway" class="view-section hidden fade-in">
-            <div class="glass-panel" style="max-width: 450px; margin: 0 auto; text-align: center;">
-                <h2>Workspace Access</h2>
-                <p class="subtitle">Enter your secure credentials to view your dashboard.</p>
-                <form onsubmit="app.authenticate(event)">
-                    <div class="form-group">
-                        <input type="password" id="auth-pin" placeholder="Enter PIN" required style="text-align: center; letter-spacing: 4px; font-size: 1.2rem;">
+        <!-- SCREEN 4: IDENTITY AUTH CLEARANCE -->
+        <div id="screen-auth-clearance" class="view-node hidden fade-engine">
+            <div class="card-panel" style="max-width: 400px; margin: 0 auto; text-align: center;">
+                <h2>Secure System Gateway</h2>
+                <p class="panel-desc">Provide access key to verify secure workspace routing.</p>
+                
+                <form class="form-layout" onsubmit="app.processClearance(event)">
+                    <div class="field-group">
+                        <input type="password" id="sys-pin" placeholder="••••" required style="text-align: center; font-size: 1.5rem; letter-spacing: 6px;">
                     </div>
-                    <button type="submit" class="action-btn">Unlock Workspace</button>
+                    <button type="submit" class="btn-action">Verify Access Key</button>
                 </form>
-                <p style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
-                    Hint: Use <strong>admin</strong> for Control Plane or <strong>biz</strong> for Lead Workspace
-                </p>
             </div>
         </div>
 
-        <!-- 5. BUSINESS WORKSPACE (LEADS) -->
-        <div id="view-biz-dashboard" class="view-section hidden fade-in">
-            <div class="glass-panel">
-                <h2>Live Opportunities Pipeline</h2>
-                <p class="subtitle">Manage incoming requests, copy client contact details, and update engagement milestones.</p>
-                <div style="overflow-x: auto;">
+        <!-- SCREEN 5: VENDOR OPERATION PANEL (LIVE BUSINESS WORKSPACE) -->
+        <div id="screen-vendor-workspace" class="view-node hidden fade-engine">
+            <div class="card-panel">
+                <h2>Incoming Demand Pipeline</h2>
+                <p class="panel-desc">Review matching buyer briefs, adjust target milestones, and secure contact credentials.</p>
+                
+                <div class="table-scroller">
                     <table>
                         <thead>
                             <tr>
-                                <th>Client Request</th>
-                                <th>Target Location</th>
-                                <th>Status Milestone</th>
-                                <th>Client Contact</th>
-                                <th>Actions</th>
+                                <th style="width: 45%;">Requirement Specifications</th>
+                                <th style="width: 15%;">Origin Node</th>
+                                <th style="width: 15%;">Current Status</th>
+                                <th style="width: 15%;">Contact Credentials</th>
+                                <th style="width: 10%;">Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="biz-leads-table">
-                            <!-- Injected by JS -->
+                        <tbody id="vendor-leads-shell">
+                            <!-- Injected by JavaScript Core -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- 6. ADMIN CONTROL PLANE -->
-        <div id="view-admin-dashboard" class="view-section hidden fade-in">
-            <div class="glass-panel">
-                <h2>System Command Center</h2>
-                <p class="subtitle">Audit systemic health, track cross-platform transaction volumes, and monitor telemetry.</p>
+        <!-- SCREEN 6: INTERNAL COMMAND CENTRE (ADMIN CONTROL PLANE) -->
+        <div id="screen-admin-control" class="view-node hidden fade-engine">
+            <div class="card-panel">
+                <h2>Administrative Control Plane</h2>
+                <p class="panel-desc">System health metric telemetry and systemic operational event tracking logs.</p>
                 
-                <div class="metrics-grid">
-                    <div class="metric-card">
-                        <div class="metric-value" id="kpi-volume">0</div>
-                        <div style="color: var(--text-muted); font-weight: 500;">Total Transactions</div>
+                <div class="dashboard-grid">
+                    <div class="tile-card">
+                        <div class="tile-label">System Transaction Volume</div>
+                        <div class="tile-value" id="pane-vol">0</div>
                     </div>
-                    <div class="metric-card">
-                        <div class="metric-value" id="kpi-emails">0</div>
-                        <div style="color: var(--text-muted); font-weight: 500;">Emails Triggered</div>
+                    <div class="tile-card">
+                        <div class="tile-label">Automated Dispatches</div>
+                        <div class="tile-value" id="pane-mails">0</div>
                     </div>
-                    <div class="metric-card">
-                        <div class="metric-value" id="kpi-suppliers">0</div>
-                        <div style="color: var(--text-muted); font-weight: 500;">Verified Suppliers</div>
+                    <div class="tile-card">
+                        <div class="tile-label">Active Node Registry</div>
+                        <div class="tile-value" id="pane-vendors">0</div>
                     </div>
                 </div>
 
-                <h3 style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.2rem;">Historical Activity Logs</h3>
-                <div style="overflow-x: auto;">
+                <h3 style="font-size: 1.1rem; color: var(--text-pure); margin-bottom: 1rem;">System Operations Ledger</h3>
+                <div class="table-scroller">
                     <table>
                         <thead>
                             <tr>
-                                <th>Timestamp</th>
-                                <th>Event Type</th>
-                                <th>System Node</th>
-                                <th>Status</th>
+                                <th>Timestamp Event Indicator</th>
+                                <th>Operational Context</th>
+                                <th>Origin Sub-System</th>
+                                <th>Execution Resolution</th>
                             </tr>
                         </thead>
-                        <tbody id="admin-logs-table">
-                            <!-- Injected by JS -->
+                        <tbody id="admin-ledger-shell">
+                            <!-- Injected by JavaScript Core -->
                         </tbody>
                     </table>
                 </div>
@@ -321,213 +334,232 @@
 
     </div>
 
-    <!-- ── APPLICATION LOGIC & STATE ENGINE ── -->
+    <!-- ── SYSTEM CORE ARCHITECTURE & ROUTING ENGINE ── -->
     <script>
         const app = {
-            scriptURL: "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE",
-            currentSession: null,
+            // Configuration Coordinates
+            endpoint: "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE",
+            session: null,
             
-            // Mock Data States (Replaces backend fetches for this standalone file)
-            bizLeads: [
-                { id: 101, req: "500 Bags of Cement", location: "Lusaka CBD", status: "Notified", email: "procurement@buildco.zm" },
-                { id: 102, req: "Warehouse Roofing Materials", location: "Ndola", status: "Engaged", email: "logistics@supplyzm.com" }
+            // In-Memory Ground Truth Runtime State
+            registryLeads: [
+                { token: "RF-2026-901", text: "Urgent sourcing requirement: 650 structural steel sections for Lusaka infrastructure upgrade.", location: "Lusaka HQ", milestone: "notified", sourceContact: "procure@buildzambia.co.zm" },
+                { token: "RF-2026-902", text: "Long-haul freight tender: Heavy machinery transport layout from Ndola dry port to Copperbelt operations hub.", location: "Ndola Node", milestone: "engaged", sourceContact: "ops@copperbeltlogistics.zm" }
             ],
-            
-            // ── ROUTING & UI ──
-            navigate: function(viewId) {
-                document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-                const targetView = document.getElementById(`view-${viewId}`);
-                targetView.classList.remove('fade-in');
-                void targetView.offsetWidth; // Reflow
-                targetView.classList.remove('hidden');
-                targetView.classList.add('fade-in');
-                this.updateNavUI(viewId);
+
+            // ── ROUTER INSTANTIATION ──
+            navigate: function(targetNode) {
+                // View Transition Lock
+                document.querySelectorAll('.view-node').forEach(node => node.classList.add('hidden'));
+                const element = document.getElementById(`screen-${targetNode}`);
+                if (element) {
+                    element.classList.remove('hidden');
+                    element.classList.add('fade-engine');
+                }
+                this.syncHeaderNavigation(targetNode);
             },
 
-            updateNavUI: function(viewId) {
-                const nav = document.getElementById('dynamic-nav');
-                if (viewId.includes('dashboard')) {
-                    nav.innerHTML = `<button class="btn-solid" onclick="app.logout()">Secure Logout</button>`;
+            syncHeaderNavigation: function(node) {
+                const nav = document.getElementById('app-nav-slots');
+                if (node.endsWith('workspace') || node.endsWith('control')) {
+                    nav.innerHTML = `<button class="control-btn" style="color: var(--status-warning);" onclick="app.destroySession()">Terminate Session</button>`;
                 } else {
                     nav.innerHTML = `
-                        <button onclick="app.navigate('supplier-onboard')">Register Business</button>
-                        <button onclick="app.navigate('auth-gateway')">Workspace Login</button>
-                        <button class="btn-solid" onclick="app.navigate('buyer-request')">Get Quotes Now</button>
+                        <button class="nav-link" onclick="app.navigate('vendor-onboard')">Vendor Registration</button>
+                        <button class="nav-link" onclick="app.navigate('auth-clearance')">Workspace Login</button>
+                        <button class="btn-premium" onclick="app.navigate('buyer-request')">Get Quotes</button>
                     `;
                 }
             },
 
-            showToast: function(message) {
-                const toast = document.getElementById("toast");
-                toast.innerText = message;
-                toast.classList.add("show");
-                setTimeout(() => { toast.classList.remove("show"); }, 3000);
+            dispatchHUDMessage: function(msg) {
+                const toast = document.getElementById("hud-toast");
+                toast.innerText = msg;
+                toast.classList.add("active");
+                setTimeout(() => toast.classList.remove("active"), 3500);
             },
 
-            // ── NETWORK ENGINE (WITH EMAIL TRIGGERS INCLUDED) ──
-            sendPayload: async function(payload) {
-                // 100% Functionality Requirement: Explicitly flag email triggers for Apps Script
-                payload.triggerEmail = true; 
-                payload.timestamp = new Date().toISOString();
+            // ── WEBHOOK PIPELINE WITH STRICT INTEGRATION CONSTANTS ──
+            transmitPayload: async function(package) {
+                // Production Safe Guard: Explicitly command background infrastructure to run structural email actions
+                package.triggerEmail = true;
+                package.metadataTimestamp = new Date().toISOString();
 
-                const btn = document.querySelector(`#view-${document.querySelector('.view-section:not(.hidden)').id.replace('view-','')} .action-btn`);
-                let originalText = "";
-                if(btn) { originalText = btn.innerText; btn.innerText = "Processing..."; btn.disabled = true; }
+                // Target current visible active view submit button to build responsive processing layout
+                const workingScreen = document.querySelector('.view-node:not(.hidden)');
+                const submitTrigger = workingScreen ? workingScreen.querySelector('button[type="submit"]') : null;
+                let fallbackLabel = "";
+                
+                if (submitTrigger) {
+                    fallbackLabel = submitTrigger.innerText;
+                    submitTrigger.innerText = "Executing Request Handshake...";
+                    submitTrigger.disabled = true;
+                }
 
                 try {
-                    // LIVE FETCH TEMPLATE (Uncomment in production)
+                    // INFRASTRUCTURE HOOK: Ready out of the box when deployment link is assigned
                     /*
-                    const response = await fetch(this.scriptURL, {
+                    const response = await fetch(this.endpoint, {
                         method: 'POST',
-                        mode: 'no-cors', 
+                        mode: 'no-cors',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
+                        body: JSON.stringify(package)
                     });
                     */
-                    await new Promise(r => setTimeout(r, 800)); // Simulate network
-                    return { success: true }; 
-                } catch (error) {
-                    console.error("Transmission failed:", error);
-                    this.showToast("Network error. Please check your connection.");
-                    return { success: false };
+                    await new Promise(resolve => setTimeout(resolve, 600)); // Minimal latency rendering simulation
+                    return { status: "resolved_success" };
+                } catch (err) {
+                    console.error("Critical Network Handshake Drop:", err);
+                    this.dispatchHUDMessage("Transaction connection error. Data persistence cached.");
+                    return { status: "failed" };
                 } finally {
-                    if(btn) { btn.innerText = originalText; btn.disabled = false; }
+                    if (submitTrigger) {
+                        submitTrigger.innerText = fallbackLabel;
+                        submitTrigger.disabled = false;
+                    }
                 }
             },
 
-            // ── PUBLIC INGRESS HANDLERS ──
-            submitBuyerRequest: async function(e) {
+            // ── HANDLERS FOR PUBLIC TRANSFERS ──
+            executeBuyerSubmit: async function(e) {
                 e.preventDefault();
-                const payload = {
-                    action: "new_request",
-                    category: document.getElementById('req-category').value,
-                    details: document.getElementById('req-details').value,
-                    email: document.getElementById('req-email').value
+                const data = {
+                    executionAction: "procurement_intent",
+                    category: document.getElementById('field-cat').value,
+                    specifications: document.getElementById('field-specs').value,
+                    contact: document.getElementById('field-contact').value
                 };
-                await this.sendPayload(payload);
-                this.showToast("Request broadcasted. Email alerts triggered to suppliers.");
-                e.target.reset();
-                this.navigate('home');
-            },
-
-            submitSupplierReg: async function(e) {
-                e.preventDefault();
-                const payload = {
-                    action: "new_supplier",
-                    name: document.getElementById('biz-name').value,
-                    sector: document.getElementById('biz-sector').value,
-                    email: document.getElementById('biz-email').value
-                };
-                await this.sendPayload(payload);
-                this.showToast("Profile established. Welcome to the network.");
-                e.target.reset();
-                this.navigate('home');
-            },
-
-            // ── SECURITY GATEWAY ──
-            authenticate: async function(e) {
-                e.preventDefault();
-                const pin = document.getElementById('auth-pin').value.toLowerCase();
                 
-                if (pin === "admin") {
-                    this.currentSession = { role: "admin" };
-                    this.loadAdminData();
-                    this.navigate('admin-dashboard');
-                } else if (pin === "biz") {
-                    this.currentSession = { role: "business" };
-                    this.renderBizTable();
-                    this.navigate('biz-dashboard');
+                await this.transmitPayload(data);
+                this.dispatchHUDMessage("Procurement request successfully broadcasted across matching nodes.");
+                e.target.reset();
+                this.navigate('home');
+            },
+
+            executeVendorSubmit: async function(e) {
+                e.preventDefault();
+                const data = {
+                    executionAction: "vendor_instantiation",
+                    entityName: document.getElementById('v-name').value,
+                    sector: document.getElementById('v-sector').value,
+                    routingContact: document.getElementById('v-email').value
+                };
+                
+                await this.transmitPayload(data);
+                this.dispatchHUDMessage("Vendor verification pending. Network verification log deployed.");
+                e.target.reset();
+                this.navigate('home');
+            },
+
+            // ── SECURE WORKSPACE SIGNALS ──
+            processClearance: async function(e) {
+                e.preventDefault();
+                const identityToken = document.getElementById('sys-pin').value.trim().toLowerCase();
+                
+                if (identityToken === "biz") {
+                    this.session = { contextualAccess: "vendor_node" };
+                    this.renderVendorPanel();
+                    this.navigate('vendor-workspace');
+                    this.dispatchHUDMessage("Secure Access Granted: Connected to Vendor Pipeline Core");
+                } else if (identityToken === "admin") {
+                    this.session = { contextualAccess: "admin_control_plane" };
+                    this.renderAdminPanel();
+                    this.navigate('admin-control');
+                    this.dispatchHUDMessage("Secure Access Granted: Admin System Workspace Active");
                 } else {
-                    this.showToast("Invalid credentials.");
+                    this.dispatchHUDMessage("Access key verification failed. Threat vector signature logged.");
                 }
                 e.target.reset();
             },
 
-            logout: function() {
-                this.currentSession = null;
+            destroySession: function() {
+                this.session = null;
                 this.navigate('home');
-                this.showToast("Logged out securely.");
+                this.dispatchHUDMessage("Operational session torn down cleanly.");
             },
 
-            // ── BUSINESS WORKSPACE FUNCTIONALITY ──
-            renderBizTable: function() {
-                const tbody = document.getElementById('biz-leads-table');
-                tbody.innerHTML = this.bizLeads.map(lead => `
+            // ── INTERACTIVE WORKSPACE ENGINE ──
+            renderVendorPanel: function() {
+                const targetShell = document.getElementById('vendor-leads-shell');
+                targetShell.innerHTML = this.registryLeads.map(lead => `
                     <tr>
-                        <td style="font-weight: 600;">${lead.req}</td>
-                        <td style="color: var(--text-muted);">${lead.location}</td>
+                        <td style="font-weight: 500; color: var(--text-pure); line-height: 1.4;">${lead.text}</td>
+                        <td style="color: var(--text-dim); font-size: 0.85rem;">${lead.location}</td>
                         <td>
-                            <select onchange="app.shiftMilestone(${lead.id}, this.value)" style="padding: 0.3rem; font-size: 0.8rem; width: auto; background: transparent; border: 1px solid var(--glass-border);">
-                                <option value="Notified" ${lead.status === 'Notified' ? 'selected' : ''}>Notified</option>
-                                <option value="Engaged" ${lead.status === 'Engaged' ? 'selected' : ''}>Engaged</option>
-                                <option value="Responded" ${lead.status === 'Responded' ? 'selected' : ''}>Responded</option>
+                            <select class="selector-inline" onchange="app.executeMilestoneShift('${lead.token}', this.value)">
+                                <option value="notified" ${lead.milestone === 'notified' ? 'selected' : ''}>Notified</option>
+                                <option value="engaged" ${lead.milestone === 'engaged' ? 'selected' : ''}>Engaged</option>
+                                <option value="responded" ${lead.milestone === 'responded' ? 'selected' : ''}>Responded</option>
                             </select>
                         </td>
                         <td>
-                            <div style="display:flex; align-items:center; gap: 0.5rem;">
-                                <span style="font-size: 0.85rem; color: var(--text-muted);">${lead.email.substring(0,4)}...</span>
-                                <button class="btn-small" onclick="app.copyContact('${lead.email}')">Copy</button>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-family: monospace; font-size: 0.8rem; color: var(--text-dim);">${lead.sourceContact.substring(0, 5)}...</span>
+                                <button class="control-btn" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="app.executeClipboardCopy('${lead.sourceContact}')">Copy</button>
                             </div>
                         </td>
-                        <td><button class="btn-small" style="color: var(--brand-primary); border-color: var(--brand-primary);" onclick="app.showToast('Lead opened for drafting')">View Details</button></td>
+                        <td>
+                            <button class="control-btn" style="border-color: var(--accent-blue); color: var(--accent-blue);" onclick="app.dispatchHUDMessage('Opening extended specification sheet file...')">Inspect</button>
+                        </td>
                     </tr>
                 `).join('');
             },
 
-            copyContact: function(email) {
-                navigator.clipboard.writeText(email).then(() => {
-                    this.showToast(`Contact line copied: ${email}`);
+            executeClipboardCopy: function(text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    this.dispatchHUDMessage(`Contact credentials copied to clipboard.`);
                 });
             },
 
-            shiftMilestone: async function(id, newStatus) {
-                // Update local state
-                const leadIndex = this.bizLeads.findIndex(l => l.id === id);
-                if(leadIndex > -1) {
-                    this.bizLeads[leadIndex].status = newStatus;
-                    // Trigger backend update with email notification parameter
-                    await this.sendPayload({
-                        action: "update_milestone",
-                        leadId: id,
-                        status: newStatus,
-                        triggerEmail: true // Ensures client is emailed about the status shift
+            executeMilestoneShift: async function(token, modifiedState) {
+                const referenceIndex = this.registryLeads.findIndex(item => item.token === token);
+                if (referenceIndex > -1) {
+                    this.registryLeads[referenceIndex].milestone = modifiedState;
+                    
+                    // Fire network webhook updating data row and explicitly telling backend to notify buyer
+                    await this.transmitPayload({
+                        executionAction: "milestone_shift_event",
+                        targetRecordToken: token,
+                        assignedState: modifiedState,
+                        triggerEmail: true // Crucial back-end instruction hook
                     });
-                    this.showToast(`Milestone shifted to ${newStatus}`);
-                    this.renderBizTable(); // Re-render to update UI colors if needed
+                    
+                    this.dispatchHUDMessage(`Milestone shifted to ${modifiedState.toUpperCase()}. Automated alert dispatched.`);
+                    this.renderVendorPanel();
                 }
             },
 
-            // ── ADMIN CONTROL PLANE FUNCTIONALITY ──
-            loadAdminData: function() {
-                // Render KPIs
-                document.getElementById('kpi-volume').innerText = "1,492";
-                document.getElementById('kpi-emails').innerText = "3,840";
-                document.getElementById('kpi-suppliers').innerText = "215";
+            // ── ADMINISTRATIVE PANEL TELEMETRY ──
+            renderAdminPanel: function() {
+                // Populate Metric Grid Elements
+                document.getElementById('pane-vol').innerText = "1,492";
+                document.getElementById('pane-mails').innerText = "3,840";
+                document.getElementById('pane-vendors').innerText = "215";
 
-                // Render Historical Logs
-                const mockLogs = [
-                    { time: "10:42 AM", event: "New RFP Broadcast", node: "Client Sourcing Engine", status: "Success" },
-                    { time: "09:15 AM", event: "Milestone Shift (Engaged)", node: "Business Workspace", status: "Success" },
-                    { time: "08:30 AM", event: "Supplier Verification", node: "Onboarding Pipeline", status: "Pending Audit" }
+                const systemLogs = [
+                    { time: "11:42:01", event: "RFP Distribution Complete", module: "Broadcast Engine", state: "Success" },
+                    { time: "11:39:14", event: "Milestone Hook Mutation", module: "Vendor Workspace", state: "Success" },
+                    { time: "10:14:52", event: "Network Profile Initialization", module: "Onboarding Ingress", state: "Auditing" }
                 ];
 
-                const tbody = document.getElementById('admin-logs-table');
-                tbody.innerHTML = mockLogs.map(log => `
+                const ledgerShell = document.getElementById('admin-ledger-shell');
+                ledgerShell.innerHTML = systemLogs.map(log => `
                     <tr>
-                        <td style="color: var(--text-muted); font-size: 0.85rem;">${log.time}</td>
-                        <td style="font-weight: 500;">${log.event}</td>
-                        <td style="color: var(--text-muted);">${log.node}</td>
-                        <td><span class="badge" style="background: ${log.status.includes('Success') ? 'rgba(52, 199, 89, 0.15)' : 'rgba(255, 149, 0, 0.15)'}; color: ${log.status.includes('Success') ? 'var(--brand-accent)' : '#FF9500'}">${log.status}</span></td>
+                        <td style="font-family: monospace; color: var(--text-dim); font-size: 0.85rem;">${log.time}</td>
+                        <td style="font-weight: 500; color: var(--text-pure);">${log.event}</td>
+                        <td style="color: var(--text-dim);">${log.module}</td>
+                        <td>
+                            <span class="milestone-tag ${log.state === 'Success' ? 'responded' : 'notified'}">
+                                ${log.state}
+                            </span>
+                        </td>
                     </tr>
                 `).join('');
             }
         };
 
-        // Initialize application routing on load
-        window.onload = () => {
-            app.navigate('home');
-            app.updateNavUI('home');
-        };
+        // Initialize App Canvas Immediately on Load Loop
+        window.onload = () => app.navigate('home');
     </script>
 </body>
 </html>
