@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>SwifTrade</title>
+    <script>
+      var path = window.location.pathname;
+      var base = '/swiftrade-v2';
+      var rest = path.replace(base, '');
+      sessionStorage.setItem('redirect', rest || '/');
+      window.location.replace(base + '/');
+    </script>
+  </head>
+  <body></body>
+</html>
