@@ -1,15 +1,14 @@
+cat > public/404.html << 'EOF'
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
     <title>SwifTrade</title>
     <script>
-      var path = window.location.pathname;
-      var base = '/swiftrade-v2';
-      var rest = path.replace(base, '');
-      sessionStorage.setItem('redirect', rest || '/');
-      window.location.replace(base + '/');
+      var segment = window.location.pathname.replace('/swiftrade-v2', '') || '/';
+      window.location.replace('/swiftrade-v2/?p=' + encodeURIComponent(segment));
     </script>
   </head>
   <body></body>
 </html>
+EOF

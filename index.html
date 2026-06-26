@@ -9,14 +9,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <script>
-      (function() {
-        var redirect = sessionStorage.getItem('redirect');
-        if (redirect && redirect !== '/') {
-          sessionStorage.removeItem('redirect');
-          window.history.replaceState(null, null, '/swiftrade-v2' + redirect);
-        }
-      })();
-    </script>
+  (function() {
+    var q = new URLSearchParams(window.location.search).get('p');
+    if (q) {
+      window.history.replaceState(null, null, '/swiftrade-v2' + q);
+    }
+  })();
+</script>
     <script type="module" crossorigin src="/swiftrade-v2/assets/index-C2FMuyQ0.js"></script>
     <link rel="stylesheet" crossorigin href="/swiftrade-v2/assets/index-C09-IQg4.css">
   </head>
